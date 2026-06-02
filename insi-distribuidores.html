@@ -157,6 +157,9 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
 
 
 .dist-intro{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:64px 80px;align-items:center;}
+.dist-img{border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.12);}
+.dist-img img{width:100%;height:auto;display:block;}
+@media(max-width:900px){.dist-intro{grid-template-columns:1fr;padding:36px 18px;gap:24px;}}
 .dist-text h2{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;letter-spacing:1px;margin-bottom:14px;}
 .dist-text h2 em{color:var(--p);font-style:normal;}
 .dist-text p{color:#555;line-height:1.8;font-size:.95rem;margin-bottom:14px;}
@@ -331,8 +334,8 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
 </div>
 
 <div class="dist-intro">
-  <div>
-    <div style="font-size:6rem;text-align:center">🤝</div>
+  <div class="dist-img">
+    <img src="media/lojas-quatro.webp" alt="As nossas lojas: Huambo, Luanda, Lubango e Namibe" loading="lazy"/>
   </div>
   <div class="dist-text">
     <h2>CRESCER JUNTOS,<br/><em>CONSTRUIR ANGOLA</em></h2>

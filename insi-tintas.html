@@ -214,6 +214,7 @@ nav{background:#fff;display:flex;align-items:center;justify-content:space-betwee
 .pal-title{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:1px;margin-bottom:4px;}
 .pal-sub{color:var(--mu);font-size:.85rem;margin-bottom:18px;}
 .pal-filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px;}
+.pal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px;max-height:55vh;overflow-y:auto;padding-right:4px;}
 .pf{padding:6px 15px;border:1.5px solid #ddd;border-radius:20px;background:#fff;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;}
 .pf:hover,.pf.on{border-color:var(--p);background:var(--p);color:#fff;}
 /* orphan rule removed */
@@ -402,6 +403,12 @@ section{padding:52px 80px;}
 .promo-c p{font-size:.9rem;margin-bottom:16px;position:relative;z-index:2;opacity:.88;}
 .promo-c button,.promo-c a{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:.85rem;position:relative;z-index:2;cursor:pointer;}
 .promo-bg{position:absolute;right:-8px;bottom:-28px;font-family:'Bebas Neue',sans-serif;font-size:6.5rem;opacity:.07;line-height:1;z-index:1;}
+.destaques{padding:0 80px 32px;}
+.dest-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.dest-banner{display:block;border-radius:18px;overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.08);transition:transform .3s,box-shadow .3s;}
+.dest-banner:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.14);}
+.dest-banner img{width:100%;height:auto;display:block;}
+@media(max-width:900px){.destaques{padding:0 18px 24px;}.dest-grid{grid-template-columns:1fr;gap:14px;}}
 .pr1{background:linear-gradient(135deg,#D62828,#6a0000);color:#fff;}
 .pr1 button,.pr1 a{color:var(--a);background:none;border:none;font-family:'Outfit',sans-serif;text-decoration:none;}
 .pr2{background:linear-gradient(135deg,#1a1a1a,#2e2e2e);color:#fff;}
@@ -492,7 +499,7 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
   .sim-layout{grid-template-columns:1fr;}
   .topbar{padding:5px 18px;display:none;}
 }
-@media(max-width:600px){.prod-grid{grid-template-columns:1fr;}.cat-grid{grid-template-columns:repeat(2,1fr);}.foot-grid{grid-template-columns:1fr;}.blog-grid{grid-template-columns:1fr;}.gal-grid{grid-template-columns:1fr;}.pal-grid{grid-template-columns:repeat(5,1fr);}.c2{grid-template-columns:1fr;}.q2{grid-template-columns:1fr;}.sim-layout{grid-template-columns:1fr;}}
+@media(max-width:600px){.prod-grid{grid-template-columns:1fr;}.cat-grid{grid-template-columns:repeat(2,1fr);}.foot-grid{grid-template-columns:1fr;}.blog-grid{grid-template-columns:1fr;}.gal-grid{grid-template-columns:1fr;}.pal-grid{grid-template-columns:repeat(auto-fill,minmax(56px,1fr));max-height:50vh;}.c2{grid-template-columns:1fr;}.q2{grid-template-columns:1fr;}.sim-layout{grid-template-columns:1fr;}}
 
 /* ── SCROLL TO TOP ── */
 #scrollTop{position:fixed;bottom:92px;right:26px;width:44px;height:44px;background:var(--d);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:890;opacity:0;transform:translateY(20px);transition:all .3s;pointer-events:none;}
@@ -1244,6 +1251,7 @@ nav{background:#fff;display:flex;align-items:center;justify-content:space-betwee
 .pal-title{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:1px;margin-bottom:4px;}
 .pal-sub{color:var(--mu);font-size:.85rem;margin-bottom:18px;}
 .pal-filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px;}
+.pal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px;max-height:55vh;overflow-y:auto;padding-right:4px;}
 .pf{padding:6px 15px;border:1.5px solid #ddd;border-radius:20px;background:#fff;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;}
 .pf:hover,.pf.on{border-color:var(--p);background:var(--p);color:#fff;}
 /* orphan rule removed */
@@ -2108,6 +2116,14 @@ nav{background:#fff;display:flex;align-items:center;justify-content:space-betwee
     <div class="promo-c pr2"><div class="promo-bg">🏠</div><h3>SIMULE A COR<br/>DA SUA CASA</h3><p>Veja como as nossas cores ficam na sua sala, quarto ou fachada antes de comprar. Ferramenta exclusiva!</p><button onclick="openSim()">🏠 Abrir Simulador →</button></div>
   </div>
 </section>
+<!-- DESTAQUES (banners marketing) -->
+<section class="destaques">
+  <div class="sec-hd"><h2 class="sec-title">PRODUTOS <em>EM DESTAQUE</em></h2></div>
+  <div class="dest-grid">
+    <a href="insi-produtos.html" class="dest-banner"><img src="media/hero-premium-acabamento.webp" alt="Acabamento premium que transforma ambientes — Insi Tintas" loading="lazy"/></a>
+    <a href="insi-produtos.html" class="dest-banner"><img src="media/hero-tinta-plastica.webp" alt="Tinta Plástica Sem Brilho — Acabamento perfeito" loading="lazy"/></a>
+  </div>
+</section>
 <!-- GALLERY -->
 <section id="galeria">
   <div class="sec-hd"><h2 class="sec-title">OBRAS <em>REALIZADAS</em></h2><a href="https://wa.me/244926199669?text=Quero%20enviar%20fotos%20da%20minha%20obra!" target="_blank" class="va">Enviar a sua obra →</a></div>
@@ -2871,13 +2887,13 @@ function addSimToCart(){
 
 /* ── GALLERY ── */
 const GALLERY=[
-  {id:'g1',e:'🏠',t:'Vivenda em Talatona',l:'Luanda',p:'Tinta PVA Profissional',c:'linear-gradient(135deg,#e8d5a3,#c9a96e)'},
-  {id:'g2',e:'🏢',t:'Escritórios no Miramar',l:'Luanda',p:'Plástica Sem Brilho',c:'linear-gradient(135deg,#dce8f0,#a8c8dc)'},
-  {id:'g3',e:'🏗️',t:'Fachada Residencial',l:'Namibe',p:'Marmorito em Pasta',c:'linear-gradient(135deg,#e8e0d5,#c8b89a)'},
-  {id:'g4',e:'🌊',t:'Terraço Impermeabilizado',l:'Huambo',p:'Borracha Líquida',c:'linear-gradient(135deg,#c8e0f0,#8ab8d8)'},
-  {id:'g5',e:'🛖',t:'Moradia Familiar',l:'Lubango',p:'Texturada de Água',c:'linear-gradient(135deg,#f0e8d0,#d8c090)'},
-  {id:'g6',e:'🏭',t:'Armazém Industrial',l:'Luanda',p:'Protector com Brilho',c:'linear-gradient(135deg,#d8d8d8,#a8a8a8)'},
-  {id:'g7',e:'🏫',t:'Escola Primária',l:'Benguela',p:'Tinta PVA Interior',c:'linear-gradient(135deg,#fffde0,#f0e870)'},
+  {id:'g1',e:'🏠',t:'Vivenda em Talatona',l:'Luanda',p:'Tinta Plástica',c:'linear-gradient(135deg,#e8d5a3,#c9a96e)',img:'media/galeria-fachada-vermelha.webp'},
+  {id:'g2',e:'🏢',t:'Escritórios no Miramar',l:'Luanda',p:'Plástica Sem Brilho',c:'linear-gradient(135deg,#dce8f0,#a8c8dc)',img:'media/galeria-deco-verde-dourado.webp'},
+  {id:'g3',e:'🏗️',t:'Painéis Decorativos 3D',l:'Namibe',p:'Tinta Plástica Branca',c:'linear-gradient(135deg,#e8e0d5,#c8b89a)',img:'media/galeria-paineis-3d.webp'},
+  {id:'g4',e:'🚢',t:'Pintura Naval',l:'Porto do Namibe',p:'Anti-Incrustante',c:'linear-gradient(135deg,#c8e0f0,#8ab8d8)',img:'media/galeria-naval.webp'},
+  {id:'g5',e:'🏛',t:'Mural Geométrico',l:'Lubango',p:'Tinta Plástica',c:'linear-gradient(135deg,#f0e8d0,#d8c090)',img:'media/galeria-mural-geometrico.webp'},
+  {id:'g6',e:'🛣',t:'Sinalização Rodoviária',l:'Luanda',p:'Tinta para Pavimento',c:'linear-gradient(135deg,#d8d8d8,#a8a8a8)',img:'media/galeria-sinalizacao.webp'},
+  {id:'g7',e:'✨',t:'Parede de Destaque',l:'Huambo',p:'Tinta Plástica Premium',c:'linear-gradient(135deg,#fffde0,#f0e870)',img:'media/galeria-deco-turquesa.webp'},
   {id:'g8',e:'🏥',t:'Centro de Saúde',l:'Huíla',p:'Multi-Superfície',c:'linear-gradient(135deg,#e8f0ff,#b8d0f8)'}
 ];
 function renderGallery(){
@@ -2886,9 +2902,10 @@ function renderGallery(){
   var stored={};try{stored=JSON.parse(localStorage.getItem('insiGallery')||'{}');}catch(e){}
   var html='';
   GALLERY.forEach(function(g){
-    var hasPhoto=!!stored[g.id];
+    var photoUrl=stored[g.id]||g.img||'';
+    var hasPhoto=!!photoUrl;
     var bgStyle=hasPhoto
-      ?'background-image:url('+stored[g.id]+');background-size:cover;background-position:center'
+      ?'background-image:url('+photoUrl+');background-size:cover;background-position:center'
       :'background:'+g.c;
     html+='<div class="g-item" style="'+bgStyle+'" onclick="galItemClick('+JSON.stringify(g.id)+')">';
     if(!hasPhoto)html+='<div class="g-emoji">'+g.e+'</div>';

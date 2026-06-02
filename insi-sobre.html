@@ -180,6 +180,10 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
 .tl-desc{font-size:.84rem;color:#666;line-height:1.6;}
 .equipa{padding:64px 80px;}
 .equipa h2{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:1px;margin-bottom:32px;}
+.equipa-showcase{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:30px 80px 30px;border-radius:18px;overflow:hidden;}
+.equipa-showcase .es-img{aspect-ratio:3/2;border-radius:14px;overflow:hidden;background:#f4f4f4;}
+.equipa-showcase .es-img img{width:100%;height:100%;object-fit:cover;display:block;}
+@media(max-width:700px){.equipa-showcase{grid-template-columns:1fr;margin:24px 18px;}}
 .equipa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
 .eq-card{text-align:center;background:var(--lg);border-radius:14px;padding:28px 16px;transition:all .25s;}
 .eq-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1);}
@@ -418,7 +422,11 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
 </div>
 
 <div class="equipa">
-  <h2>A NOSSA <span style="color:var(--p)">EQUIPA</span></h2>
+  <div class="equipa-showcase">
+  <div class="es-img"><img src="media/team-pintor.webp" alt="Profissional Insi em aplicação" loading="lazy"/></div>
+  <div class="es-img"><img src="media/team-pintora.webp" alt="Profissional Insi com equipamento de proteção" loading="lazy"/></div>
+</div>
+<h2>A NOSSA <span style="color:var(--p)">EQUIPA</span></h2>
   <div class="equipa-grid">
     <div class="eq-card"><div class="eq-av">DG</div><div class="eq-name">Director Geral</div><div class="eq-role">Fundador & Visão Estratégica</div></div>
     <div class="eq-card"><div class="eq-av">DP</div><div class="eq-name">Dir. de Produção</div><div class="eq-role">Qualidade & Formulação</div></div>
