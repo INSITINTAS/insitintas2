@@ -269,6 +269,17 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
   footer{padding:40px 18px 20px;}.foot-grid{grid-template-columns:1fr 1fr;gap:24px;}
 }
 @media(max-width:600px){.prod-grid{grid-template-columns:1fr;}.foot-grid{grid-template-columns:1fr;}}
+@media(max-width:760px){
+  .filters-bar{padding-top:10px;padding-bottom:10px;gap:8px;}
+  /* "Categoria:" passa a ocupar a sua própria linha, por cima da faixa */
+  .filters-bar > .fb-lbl:first-of-type{width:100%;margin-bottom:-4px;}
+  /* faixa de categorias: uma só linha, deslizável na horizontal */
+  #catFilters{width:100%;flex-wrap:nowrap!important;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:3px;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 14px,#000 calc(100% - 16px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 14px,#000 calc(100% - 16px),transparent 100%);}
+  #catFilters::-webkit-scrollbar{display:none;height:0;}
+  .ff{flex:0 0 auto;padding:5px 12px;font-size:.74rem;}
+  #prodSearch{width:100%!important;order:9;}
+  .price-filter{flex:1 1 100%;}
+}
 .linha-tab{padding:7px 15px;background:#fff;border:1.5px solid #ddd;border-radius:18px;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;}.linha-tab:hover{border-color:var(--p);color:var(--p);}.linha-tab.on{background:var(--d);color:#fff;border-color:var(--d);}.linha-tab[data-linha="Residencial"].on{background:#27ae60;border-color:#27ae60;}.linha-tab[data-linha="Automóvel"].on{background:#2980b9;border-color:#2980b9;}.linha-tab[data-linha="Matéria Prima"].on{background:#8e6e53;border-color:#8e6e53;}
 
 /* ═══ MODAL WHATSAPP PICKER (UNIVERSAL) ═══ */
@@ -621,7 +632,7 @@ const CNAMES={"#FFFFFF":"Branco Puro","#000000":"Preto","#F5F0E8":"Branco Areia"
 function cn(h){return CNAMES[h]||h;}
 
 const CATS=['Todos','Agua','Sintetica','Texturada','Primario','Verniz','Impermeabilizante','Auto-Betume','Auto-Primario','Auto-Tinta','Auto-Verniz','Auto-Secante','Auto-Carroceria','Ind-Pavimento','Ind-Asfaltica','Ind-Termoplastica','Ind-Resina','Ind-Epoxi','Ind-Betuminosa','Comp-Piscina','Comp-Telha','Comp-Cola','Comp-Massa','Comp-Artistica','Comp-Aluminio','Comp-Barco','Comp-Estuque','Comp-Cimento','MP-Carbonato'];
-const CAT_LABELS={'Agua':'Água','Sintetica':'Sintética','Primario':'Primário','Auto-Betume':'Betume','Auto-Primario':'Primário Auto','Auto-Tinta':'Tinta Auto','Auto-Verniz':'Verniz Auto','Auto-Secante':'Secante','Auto-Carroceria':'Carroceria','Ind-Pavimento':'Pavimento','Ind-Asfaltica':'Asfáltica','Ind-Termoplastica':'Termoplástica','Ind-Resina':'Resina Fibra','Ind-Epoxi':'Epóxi','Ind-Betuminosa':'Betuminosa','Comp-Piscina':'Piscina','Comp-Telha':'Telha','Comp-Cola':'Cola Branca','Comp-Massa':'Massas','Comp-Artistica':'Artística','Comp-Aluminio':'Alumínio','Comp-Barco':'Barcos','Comp-Acabamento':'Acabamentos','Comp-Piscina':'Piscina','Comp-Telha':'Telha','Comp-Cola':'Cola','Comp-Massa':'Massa Moldes','Comp-Artistica':'Artística','Comp-Aluminio':'Alumínio','Comp-Barco':'Barco','Comp-Estuque':'Estuque','Comp-Cimento':'Cimento Cola','MP-Carbonato':'Carbonato de Cálcio'};
+const CAT_LABELS={'Água':'Água','Sintética':'Sintética','Texturada':'Texturada','Primário':'Primário','Verniz':'Verniz','Impermeabilizante':'Impermeável','Auto-Betume':'Betume','Auto-Primário':'Primário Auto','Auto-Tinta':'Tinta Auto','Auto-Verniz':'Verniz Auto','Auto-Secante':'Secante','Auto-Carroceria':'Carroceria','Ind-Pavimento':'Pavimento','Ind-Asfaltica':'Asfáltica','Ind-Termoplastica':'Termoplástica','Ind-Resina':'Resina','Ind-Epoxi':'Epóxi','Ind-Betuminosa':'Betuminosa','Comp-Piscina':'Piscina','Comp-Telha':'Telha','Comp-Cola':'Cola','Comp-Massa':'Massas','Comp-Artistica':'Artística','Comp-Aluminio':'Alumínio','Comp-Barco':'Barcos','Comp-Acabamento':'Acabamentos','MP-Carbonato':'Carbonato'};
 const BADGE_LABEL={hot:'+ Vendido',new:'Novidade',sale:'Promocao',dest:'Destaque'};
 const BADGE_COLOR={hot:'#ff6b00',new:'#F7B731',sale:'#D62828',dest:'#7c3aed'};
 const BADGE_CLS={hot:'bh',new:'bn',sale:'bs',dest:'bd'};
@@ -666,7 +677,12 @@ function updatePrice(v){
 
 /* CATEGORIES */
 function renderCats(){
-  document.getElementById('catFilters').innerHTML=CATS.map(function(c){
+  var cats=['Todos'];
+  PRODUCTS.forEach(function(p){
+    if(activeProdLinha && p.linha!==activeProdLinha) return;
+    if(cats.indexOf(p.cat)===-1) cats.push(p.cat);
+  });
+  document.getElementById('catFilters').innerHTML=cats.map(function(c){
     var lbl=CAT_LABELS[c]||c;
     var on=c===activeCat?' on':'';
     return '<button class="ff'+on+'" data-c="'+c+'" onclick="setCatEl(this)">'+lbl+'</button>';
