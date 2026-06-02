@@ -370,6 +370,8 @@ section{padding:52px 80px;}
 .pcard{background:#fff;border-radius:15px;overflow:hidden;transition:all .22s;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.05);position:relative;}
 .pcard:hover{transform:translateY(-6px);box-shadow:0 14px 36px rgba(0,0,0,.11);}
 .p-imgwrap{width:100%;height:200px;background:var(--lg);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.p-imgwrap.no-img{background:linear-gradient(135deg,#f4f4f4,#e0e0e0);}
+.p-imgwrap.no-img::after{content:"📦";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3rem;opacity:.25;}
 .p-imgwrap img{width:100%;height:100%;object-fit:contain;padding:10px;transition:transform .3s;}
 .pcard:hover .p-imgwrap img{transform:scale(1.07);}
 .p-badge{position:absolute;top:9px;left:9px;padding:3px 9px;border-radius:6px;font-size:.66rem;font-weight:700;text-transform:uppercase;z-index:2;}
@@ -2243,13 +2245,17 @@ const IMGS={
      O administrador pode substituir via Admin Panel → Imagens */
 };
 function img(n){
-  if(IMGS[n])return IMGS[n];
-  // Check localStorage for admin-uploaded images
+  if(!n)return '';
+  // Admin-uploaded images take priority (localStorage)
   try{
     var stored=JSON.parse(localStorage.getItem('insiIMGS')||'{}');
     if(stored[n])return stored[n];
   }catch(e){}
-  return '';  // Returns empty → CSS placeholder shown
+  // Legacy: check IMGS dict (in case admin set up old way)
+  if(IMGS[n])return IMGS[n];
+  // Default: load from img/ folder as .webp (strip .png extension if present)
+  var base=n.replace(/\.(png|jpg|jpeg|webp)$/i,'');
+  return 'img/'+base+'.webp';
 }
 function saveIMG(key,dataUrl){
   try{
@@ -2398,7 +2404,7 @@ function renderWish(){
     const p=PRODUCTS.find(x=>x.id===pid);
     if(!p)return'';
     return`<div class="w-item">
-      <div class="w-thumb"><img src="${img(p.img)}" alt="${p.name}"/></div>
+      <div class="w-thumb"><img src="${img(p.img)}" alt="${p.name}" onerror="this.style.display='none'"/></div>
       <div class="w-inf">
         <div class="w-name">${p.name}</div>
         <div class="w-price">${fmt(p.price)}</div>
@@ -2576,7 +2582,7 @@ function renderProds(list){
   const BH2={hot:'bh',new:'bn',sale:'bs',dest:'bd'};
   grid.innerHTML=list.map(p=>`<div class="pcard">
     <div class="p-imgwrap">
-      <img src="${img(p.img)}" alt="${p.name}" loading="lazy"/>
+      <img src="${img(p.img)}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('no-img')"/>
       ${p.badge?`<span class="p-badge ${BH2[p.badge]}">${BL[p.badge]}</span>`:''}
       <button class="p-quick" onclick="event.stopPropagation();openModal(${p.id})" title="Ver detalhes">👁</button>
       <button class="p-wish ${isWished(p.id)?'on':''}" onclick="event.stopPropagation();wClick(${p.id},this)">❤</button>
