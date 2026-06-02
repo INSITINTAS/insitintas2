@@ -404,11 +404,15 @@ section{padding:52px 80px;}
 .promo-c button,.promo-c a{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:.85rem;position:relative;z-index:2;cursor:pointer;}
 .promo-bg{position:absolute;right:-8px;bottom:-28px;font-family:'Bebas Neue',sans-serif;font-size:6.5rem;opacity:.07;line-height:1;z-index:1;}
 .destaques{padding:0 80px 32px;}
-.dest-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.dest-banner{display:block;border-radius:18px;overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.08);transition:transform .3s,box-shadow .3s;}
+.destaques .sec-sub{color:var(--mu);font-size:.95rem;margin-top:6px;}
+.dest-grid,.dest-grid-3{display:grid;gap:20px;margin-bottom:20px;}
+.dest-grid{grid-template-columns:1fr 1fr;}
+.dest-grid-3{grid-template-columns:repeat(3,1fr);}
+.dest-banner{display:block;border-radius:18px;overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.08);transition:transform .3s,box-shadow .3s;background:#f4f4f4;}
 .dest-banner:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.14);}
 .dest-banner img{width:100%;height:auto;display:block;}
-@media(max-width:900px){.destaques{padding:0 18px 24px;}.dest-grid{grid-template-columns:1fr;gap:14px;}}
+.dest-tall img{aspect-ratio:3/4;object-fit:cover;}
+@media(max-width:900px){.destaques{padding:0 18px 24px;}.dest-grid,.dest-grid-3{grid-template-columns:1fr;gap:14px;}.dest-tall img{aspect-ratio:auto;}}
 .pr1{background:linear-gradient(135deg,#D62828,#6a0000);color:#fff;}
 .pr1 button,.pr1 a{color:var(--a);background:none;border:none;font-family:'Outfit',sans-serif;text-decoration:none;}
 .pr2{background:linear-gradient(135deg,#1a1a1a,#2e2e2e);color:#fff;}
@@ -2118,7 +2122,12 @@ nav{background:#fff;display:flex;align-items:center;justify-content:space-betwee
 </section>
 <!-- DESTAQUES (banners marketing) -->
 <section class="destaques">
-  <div class="sec-hd"><h2 class="sec-title">PRODUTOS <em>EM DESTAQUE</em></h2></div>
+  <div class="sec-hd"><h2 class="sec-title">PRODUTOS <em>EM DESTAQUE</em></h2><p class="sec-sub">Conheça as nossas linhas premium para transformar qualquer ambiente</p></div>
+  <div class="dest-grid-3">
+    <a href="insi-produtos.html" class="dest-banner dest-tall"><img src="media/hero-marmorito-banner.webp" alt="Marmorito Insi — Efeito Mármore Premium" loading="lazy"/></a>
+    <a href="insi-produtos.html" class="dest-banner dest-tall"><img src="media/hero-borracha-banner.webp" alt="Borracha Líquida Insi — Impermeabilização que dura" loading="lazy"/></a>
+    <a href="insi-produtos.html" class="dest-banner dest-tall"><img src="media/hero-multisuperficie-banner.webp" alt="Tinta Mult-Superfície Insi — Uma tinta, múltiplas superfícies" loading="lazy"/></a>
+  </div>
   <div class="dest-grid">
     <a href="insi-produtos.html" class="dest-banner"><img src="media/hero-premium-acabamento.webp" alt="Acabamento premium que transforma ambientes — Insi Tintas" loading="lazy"/></a>
     <a href="insi-produtos.html" class="dest-banner"><img src="media/hero-tinta-plastica.webp" alt="Tinta Plástica Sem Brilho — Acabamento perfeito" loading="lazy"/></a>
@@ -2888,13 +2897,21 @@ function addSimToCart(){
 /* ── GALLERY ── */
 const GALLERY=[
   {id:'g1',e:'🏠',t:'Vivenda em Talatona',l:'Luanda',p:'Tinta Plástica',c:'linear-gradient(135deg,#e8d5a3,#c9a96e)',img:'media/galeria-fachada-vermelha.webp'},
-  {id:'g2',e:'🏢',t:'Escritórios no Miramar',l:'Luanda',p:'Plástica Sem Brilho',c:'linear-gradient(135deg,#dce8f0,#a8c8dc)',img:'media/galeria-deco-verde-dourado.webp'},
-  {id:'g3',e:'🏗️',t:'Painéis Decorativos 3D',l:'Namibe',p:'Tinta Plástica Branca',c:'linear-gradient(135deg,#e8e0d5,#c8b89a)',img:'media/galeria-paineis-3d.webp'},
-  {id:'g4',e:'🚢',t:'Pintura Naval',l:'Porto do Namibe',p:'Anti-Incrustante',c:'linear-gradient(135deg,#c8e0f0,#8ab8d8)',img:'media/galeria-naval.webp'},
-  {id:'g5',e:'🏛',t:'Mural Geométrico',l:'Lubango',p:'Tinta Plástica',c:'linear-gradient(135deg,#f0e8d0,#d8c090)',img:'media/galeria-mural-geometrico.webp'},
-  {id:'g6',e:'🛣',t:'Sinalização Rodoviária',l:'Luanda',p:'Tinta para Pavimento',c:'linear-gradient(135deg,#d8d8d8,#a8a8a8)',img:'media/galeria-sinalizacao.webp'},
-  {id:'g7',e:'✨',t:'Parede de Destaque',l:'Huambo',p:'Tinta Plástica Premium',c:'linear-gradient(135deg,#fffde0,#f0e870)',img:'media/galeria-deco-turquesa.webp'},
-  {id:'g8',e:'🏥',t:'Centro de Saúde',l:'Huíla',p:'Multi-Superfície',c:'linear-gradient(135deg,#e8f0ff,#b8d0f8)'}
+  {id:'g2',e:'🏛',t:'Fachada com Marmorito',l:'Lubango',p:'Marmorito em Pasta',c:'linear-gradient(135deg,#e8e0d5,#c8b89a)',img:'media/obra-fachada-marmorito.webp'},
+  {id:'g3',e:'🧱',t:'Muro Decorativo',l:'Namibe',p:'Marmorito Amarelo & Cinza',c:'linear-gradient(135deg,#f0e0a0,#d8b850)',img:'media/obra-muro-amarelo-marmorito.webp'},
+  {id:'g4',e:'🌊',t:'Painéis 3D Ondas',l:'Lubango',p:'Tinta Plástica Branca',c:'linear-gradient(135deg,#e8e8e8,#c0c0c0)',img:'media/obra-painel3d-ondas.webp'},
+  {id:'g5',e:'✨',t:'Painéis 3D Pétalas',l:'Huambo',p:'Tinta Plástica',c:'linear-gradient(135deg,#f8f8f8,#d8d8d8)',img:'media/obra-painel3d-petalas-sala.webp'},
+  {id:'g6',e:'🏢',t:'Espaço Comercial 3D',l:'Luanda',p:'Tinta Plástica Branca',c:'linear-gradient(135deg,#f0f0f0,#c8c8c8)',img:'media/obra-painel3d-petalas-garagem.webp'},
+  {id:'g7',e:'🏗',t:'Muro com Granitex',l:'Huambo',p:'Marmorito Cinzento',c:'linear-gradient(135deg,#d8d8d8,#a8a8a8)',img:'media/obra-muro-cinza-marmorito.webp'},
+  {id:'g8',e:'⚫',t:'Chão Industrial',l:'Luanda',p:'Tinta Epóxi',c:'linear-gradient(135deg,#444,#222)',img:'media/obra-chao-epoxy-preto.webp'},
+  {id:'g9',e:'🚢',t:'Pintura Naval',l:'Porto do Namibe',p:'Anti-Incrustante',c:'linear-gradient(135deg,#c8e0f0,#8ab8d8)',img:'media/galeria-naval.webp'},
+  {id:'g10',e:'🏗️',t:'Painel Decorativo Especial',l:'Namibe',p:'Tinta Plástica + Massa',c:'linear-gradient(135deg,#e8e0d5,#c8b89a)',img:'media/galeria-paineis-3d.webp'},
+  {id:'g11',e:'💎',t:'Parede com Ripado',l:'Luanda',p:'Tinta Plástica + Acessórios',c:'linear-gradient(135deg,#1a3a5a,#0a1a2a)',img:'media/galeria-parede-ripado-azul.webp'},
+  {id:'g12',e:'🌟',t:'Acabamento Decorativo',l:'Lubango',p:'Tinta Plástica Premium',c:'linear-gradient(135deg,#fffde0,#f0e870)',img:'media/galeria-deco-turquesa.webp'},
+  {id:'g13',e:'🛣',t:'Sinalização Rodoviária',l:'Luanda',p:'Tinta para Pavimento',c:'linear-gradient(135deg,#d8d8d8,#a8a8a8)',img:'media/galeria-sinalizacao.webp'},
+  {id:'g14',e:'🏛',t:'Mural Geométrico',l:'Huambo',p:'Tinta Plástica',c:'linear-gradient(135deg,#f0e8d0,#d8c090)',img:'media/galeria-mural-geometrico.webp'},
+  {id:'g15',e:'🪵',t:'Inspiração: Chão Epóxi Madeira',l:'Inspiração',p:'Resina Epóxi',c:'linear-gradient(135deg,#8b6a3a,#5a4020)',img:'media/galeria-epoxy-sala-luxuosa.webp'},
+  {id:'g16',e:'🌌',t:'Inspiração: Chão Epóxi 3D',l:'Inspiração',p:'Resina Epóxi',c:'linear-gradient(135deg,#1a3a8a,#0a1a4a)',img:'media/galeria-epoxy-garagem.webp'}
 ];
 function renderGallery(){
   var grid=document.getElementById('galGrid');
