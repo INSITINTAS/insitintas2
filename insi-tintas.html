@@ -303,8 +303,10 @@ nav{background:#fff;display:flex;align-items:center;justify-content:space-betwee
 .wa-tip{background:#fff;border-radius:11px;padding:9px 13px;font-size:.79rem;font-weight:600;box-shadow:0 4px 18px rgba(0,0,0,.12);display:none;max-width:190px;text-align:center;}
 .wa-wrap:hover .wa-tip{display:block;animation:fadeUp .25s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.wa-btn{width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,.4);text-decoration:none;font-size:1.7rem;transition:transform .2s;}
-.wa-btn:hover{transform:scale(1.1);}
+.wa-btn{width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 22px rgba(37,211,102,.5);text-decoration:none;transition:transform .2s,box-shadow .2s;animation:waPulse 2.6s ease-in-out infinite;}
+.wa-btn svg{display:block;}
+@keyframes waPulse{0%,100%{box-shadow:0 4px 22px rgba(37,211,102,.5)}50%{box-shadow:0 4px 22px rgba(37,211,102,.5),0 0 0 14px rgba(37,211,102,0)}}
+.wa-btn:hover{transform:scale(1.08);box-shadow:0 6px 26px rgba(37,211,102,.65);}
 /* ── COMPARE BAR ── */
 .cmp-bar{position:fixed;bottom:0;left:0;right:0;background:var(--d);padding:12px 40px;display:none;align-items:center;justify-content:space-between;z-index:800;box-shadow:0 -4px 18px rgba(0,0,0,.2);}
 .cmp-bar.on{display:flex;}
@@ -1462,6 +1464,30 @@ nav{background:#fff;display:flex;align-items:center;justify-content:space-betwee
 #mImg[src=""]{visibility:hidden;}
 
 .nav-settings-btn{opacity:.35;font-size:.85rem;transition:opacity .2s;}.nav-settings-btn:hover{opacity:1;}
+
+/* ═══ MODAL WHATSAPP PICKER (UNIVERSAL) ═══ */
+.wa-picker-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:99999;display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
+.wa-picker-overlay.open{display:flex;animation:waFadeIn .2s ease;}
+@keyframes waFadeIn{from{opacity:0}to{opacity:1}}
+.wa-picker-box{background:#fff;border-radius:16px;max-width:520px;width:100%;max-height:92vh;overflow-y:auto;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:waSlideUp .25s ease;}
+@keyframes waSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.wa-picker-x{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.05);border:0;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;color:#666;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:2;}
+.wa-picker-x:hover{background:rgba(0,0,0,.12);}
+.wa-picker-head{padding:26px 22px 14px;text-align:center;border-bottom:1px solid #f0f0f0;}
+.wa-picker-icon{font-size:2.4rem;margin-bottom:6px;}
+.wa-picker-head h3{margin:0 0 4px;font-size:1.18rem;color:#111;font-weight:700;}
+.wa-picker-head p{margin:0;color:#777;font-size:.85rem;}
+.wa-picker-grid{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.wa-picker-grid{grid-template-columns:1fr;}}
+.wa-store-card{background:#fafafa;border:2px solid #eee;border-radius:11px;padding:13px 11px;cursor:pointer;display:flex;gap:11px;align-items:flex-start;text-align:left;transition:all .15s;font-family:inherit;}
+.wa-store-card:hover{border-color:#25D366;background:#f0fff4;transform:translateY(-2px);box-shadow:0 6px 14px rgba(37,211,102,.18);}
+.wa-store-icon{font-size:1.7rem;line-height:1;flex-shrink:0;}
+.wa-store-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.wa-store-info strong{font-size:.96rem;color:#111;font-weight:700;display:flex;align-items:center;gap:6px;}
+.wa-store-tag{display:inline-block;background:#D62828;color:#fff;font-size:.6rem;padding:1px 6px;border-radius:8px;font-weight:600;letter-spacing:.5px;align-self:flex-start;text-transform:uppercase;}
+.wa-store-info small{font-size:.72rem;color:#777;line-height:1.3;}
+.wa-store-info em{font-style:normal;font-size:.78rem;color:#25D366;font-weight:700;margin-top:2px;}
+.wa-picker-foot{padding:10px 22px 18px;text-align:center;font-size:.72rem;color:#999;}
 </style>
 </head>
 <body>
@@ -1613,8 +1639,8 @@ nav{background:#fff;display:flex;align-items:center;justify-content:space-betwee
 </div>
 <!-- WHATSAPP FLOAT -->
 <div class="wa-wrap">
-  <div class="wa-tip">Fale connosco via WhatsApp! 👋</div>
-  <a class="wa-btn" href="https://wa.me/244926199669?text=Olá%20Insi%20Tintas!%20Preciso%20de%20ajuda." target="_blank">💬</a>
+  <div class="wa-tip">Falar via WhatsApp 👋</div>
+  <a class="wa-btn" href="https://wa.me/244926199669?text=Olá%20Insi%20Tintas!%20Preciso%20de%20ajuda." target="_blank" aria-label="WhatsApp Insi Tintas"><svg viewBox="0 0 24 24" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>
 </div>
 <!-- COMPARE BAR -->
 <div class="cmp-bar" id="cmpBar">
@@ -3170,31 +3196,7 @@ function printQuote(){
     +'.tot{font-size:1.2rem;font-weight:700;color:#D62828;text-align:right;margin-top:14px;}'
     +'.footer{margin-top:28px;font-size:.78rem;color:#888;border-top:1px solid #eee;padding-top:14px;}'
     +'@media print{.no-print{display:none!important;}}'
-    +'
-/* ═══ MODAL WHATSAPP PICKER (UNIVERSAL) ═══ */
-.wa-picker-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:99999;display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
-.wa-picker-overlay.open{display:flex;animation:waFadeIn .2s ease;}
-@keyframes waFadeIn{from{opacity:0}to{opacity:1}}
-.wa-picker-box{background:#fff;border-radius:16px;max-width:520px;width:100%;max-height:92vh;overflow-y:auto;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:waSlideUp .25s ease;}
-@keyframes waSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.wa-picker-x{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.05);border:0;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;color:#666;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:2;}
-.wa-picker-x:hover{background:rgba(0,0,0,.12);}
-.wa-picker-head{padding:26px 22px 14px;text-align:center;border-bottom:1px solid #f0f0f0;}
-.wa-picker-icon{font-size:2.4rem;margin-bottom:6px;}
-.wa-picker-head h3{margin:0 0 4px;font-size:1.18rem;color:#111;font-weight:700;}
-.wa-picker-head p{margin:0;color:#777;font-size:.85rem;}
-.wa-picker-grid{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-@media(max-width:480px){.wa-picker-grid{grid-template-columns:1fr;}}
-.wa-store-card{background:#fafafa;border:2px solid #eee;border-radius:11px;padding:13px 11px;cursor:pointer;display:flex;gap:11px;align-items:flex-start;text-align:left;transition:all .15s;font-family:inherit;}
-.wa-store-card:hover{border-color:#25D366;background:#f0fff4;transform:translateY(-2px);box-shadow:0 6px 14px rgba(37,211,102,.18);}
-.wa-store-icon{font-size:1.7rem;line-height:1;flex-shrink:0;}
-.wa-store-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
-.wa-store-info strong{font-size:.96rem;color:#111;font-weight:700;display:flex;align-items:center;gap:6px;}
-.wa-store-tag{display:inline-block;background:#D62828;color:#fff;font-size:.6rem;padding:1px 6px;border-radius:8px;font-weight:600;letter-spacing:.5px;align-self:flex-start;text-transform:uppercase;}
-.wa-store-info small{font-size:.72rem;color:#777;line-height:1.3;}
-.wa-store-info em{font-style:normal;font-size:.78rem;color:#25D366;font-weight:700;margin-top:2px;}
-.wa-picker-foot{padding:10px 22px 18px;text-align:center;font-size:.72rem;color:#999;}
-</style></head><body>'
+    +'</style></head><body>'
     +'<h1>INSI TINTAS</h1>'
     +'<div class="sub">Orcamento N. '+ref+' - '+date+' - geral@insitintas.com - 926 199 669</div>'
     +'<table><thead><tr><th>Produto</th><th>Cor</th><th>Tam.</th><th>Qtd.</th><th>Unit.</th><th>Total</th></tr></thead>'
@@ -3313,7 +3315,7 @@ document.addEventListener('DOMContentLoaded', init);
 </div>
 <script>(function(){var y=new Date().getFullYear();document.querySelectorAll(".insiYr").forEach(function(e){e.textContent=y;});})();</script>
 <!-- ═══ MODAL UNIVERSAL: SELEÇÃO DE LOJA WHATSAPP ═══ -->
-<div id="waPickerModal" class="wa-picker-overlay" onclick="if(event.target===this)closeWaPicker()" role="dialog" aria-modal="true" aria-labelledby="waPickerTitle">
+<div id="waPickerModal" class="wa-picker-overlay" style="display:none" onclick="if(event.target===this)closeWaPicker()" role="dialog" aria-modal="true" aria-labelledby="waPickerTitle">
   <div class="wa-picker-box">
     <button class="wa-picker-x" onclick="closeWaPicker()" aria-label="Fechar">✕</button>
     <div class="wa-picker-head">
@@ -3371,12 +3373,12 @@ document.addEventListener('DOMContentLoaded', init);
   window.openWaPicker = function(msg){
     pendingMsg = msg || '';
     var m = document.getElementById('waPickerModal');
-    if(m){ m.classList.add('open'); document.body.style.overflow='hidden'; }
+    if(m){ m.style.display='flex'; m.classList.add('open'); document.body.style.overflow='hidden'; }
   };
   
   window.closeWaPicker = function(){
     var m = document.getElementById('waPickerModal');
-    if(m){ m.classList.remove('open'); document.body.style.overflow=''; }
+    if(m){ m.style.display='none'; m.classList.remove('open'); document.body.style.overflow=''; }
   };
   
   // Intercept all WhatsApp clicks across the page
