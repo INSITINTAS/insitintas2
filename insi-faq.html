@@ -171,6 +171,30 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
 #scrollTop:hover{background:#D62828;}
 @media(max-width:700px){.faq-layout{padding:32px 18px;}}
 
+
+/* ═══ MODAL WHATSAPP PICKER (UNIVERSAL) ═══ */
+.wa-picker-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:99999;display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
+.wa-picker-overlay.open{display:flex;animation:waFadeIn .2s ease;}
+@keyframes waFadeIn{from{opacity:0}to{opacity:1}}
+.wa-picker-box{background:#fff;border-radius:16px;max-width:520px;width:100%;max-height:92vh;overflow-y:auto;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:waSlideUp .25s ease;}
+@keyframes waSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.wa-picker-x{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.05);border:0;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;color:#666;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:2;}
+.wa-picker-x:hover{background:rgba(0,0,0,.12);}
+.wa-picker-head{padding:26px 22px 14px;text-align:center;border-bottom:1px solid #f0f0f0;}
+.wa-picker-icon{font-size:2.4rem;margin-bottom:6px;}
+.wa-picker-head h3{margin:0 0 4px;font-size:1.18rem;color:#111;font-weight:700;}
+.wa-picker-head p{margin:0;color:#777;font-size:.85rem;}
+.wa-picker-grid{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.wa-picker-grid{grid-template-columns:1fr;}}
+.wa-store-card{background:#fafafa;border:2px solid #eee;border-radius:11px;padding:13px 11px;cursor:pointer;display:flex;gap:11px;align-items:flex-start;text-align:left;transition:all .15s;font-family:inherit;}
+.wa-store-card:hover{border-color:#25D366;background:#f0fff4;transform:translateY(-2px);box-shadow:0 6px 14px rgba(37,211,102,.18);}
+.wa-store-icon{font-size:1.7rem;line-height:1;flex-shrink:0;}
+.wa-store-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.wa-store-info strong{font-size:.96rem;color:#111;font-weight:700;display:flex;align-items:center;gap:6px;}
+.wa-store-tag{display:inline-block;background:#D62828;color:#fff;font-size:.6rem;padding:1px 6px;border-radius:8px;font-weight:600;letter-spacing:.5px;align-self:flex-start;text-transform:uppercase;}
+.wa-store-info small{font-size:.72rem;color:#777;line-height:1.3;}
+.wa-store-info em{font-style:normal;font-size:.78rem;color:#25D366;font-weight:700;margin-top:2px;}
+.wa-picker-foot{padding:10px 22px 18px;text-align:center;font-size:.72rem;color:#999;}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Fazem entrega em todo Angola?","acceptedAnswer":{"@type":"Answer","text":"Sim! Entregamos em todas as províncias de Angola. Temos filiais próprias em Luanda, Namibe, Lubango e Huambo, e parceiros de entrega para as restantes províncias."}},{"@type":"Question","name":"Quanto tempo demora a entrega?","acceptedAnswer":{"@type":"Answer","text":"Luanda: 24 a 48 horas úteis. Namibe, Lubango, Huambo: 2 a 4 dias úteis. Outras províncias: 5 a 10 dias úteis. Todos os prazos são contados após confirmação de pagamento."}},{"@type":"Question","name":"Qual é o custo de entrega?","acceptedAnswer":{"@type":"Answer","text":"A entrega é gratuita em todo Angola, independentemente do valor da encomenda."}},{"@type":"Question","name":"Posso levantar na loja?","acceptedAnswer":{"@type":"Answer","text":"Sim! Pode levantar nas nossas 4 filiais: Namibe (Rua Juiz Ornelas), Luanda (Via Express, SOMAG), Lubango (Maçon Executivo), Huambo (Zona Industrial). O levantamento fica pronto em 2 a 4 horas."}},{"@type":"Question","name":"Que métodos de pagamento aceitam?","acceptedAnswer":{"@type":"Answer","text":"Aceitamos Multicaixa Express, Transferência Bancária (BFA) e Contra-Entrega (apenas para encomendas até 150.000 Kz entregues nas nossas filiais)."}},{"@type":"Question","name":"Emitem factura com NIF?","acceptedAnswer":{"@type":"Answer","text":"Sim! Para clientes empresa, basta indicar o NIF durante o checkout. A factura é enviada por email ou WhatsApp."}},{"@type":"Question","name":"Têm preços especiais para empreiteiros?","acceptedAnswer":{"@type":"Answer","text":"Sim! Para encomendas acima de 200.000 Kz temos preços preferenciais. Contacte-nos pelo WhatsApp ou use o formulário de Orçamento PRO."}},{"@type":"Question","name":"As tintas são fabricadas em Angola?","acceptedAnswer":{"@type":"Answer","text":"Sim, 100%! Todos os produtos Insi Tintas são fabricados na nossa unidade de produção no Namibe, com controlo de qualidade rigoroso. Somos certificados pelo DPRT."}},{"@type":"Question","name":"Qual a diferença entre tinta PVA e tinta Plástica?","acceptedAnswer":{"@type":"Answer","text":"A tinta PVA é mais económica, com boa cobertura e secagem rápida — ideal para interiores de baixo desgaste. A tinta Plástica tem maior resistência à lavagem e humidade — ideal para cozinhas, casas de banho e exteriores."}},{"@type":"Question","name":"Como posso misturar cores?","acceptedAnswer":{"@type":"Answer","text":"A mistura de cores personalizadas está disponível nas nossas lojas físicas. Online, oferecemos a nossa paleta de mais de 500 cores standard. Para cores especiais, contacte-nos antes de encomendar."}},{"@type":"Question","name":"Qual o prazo de validade das tintas?","acceptedAnswer":{"@type":"Answer","text":"As tintas Insi têm prazo de validade mínimo de 24 meses a partir da data de fabrico, quando armazenadas correctamente à sombra, entre 10 e 35 graus, com embalagem fechada."}},{"@type":"Question","name":"Quanto tinta preciso para a minha obra?","acceptedAnswer":{"@type":"Answer","text":"Use a nossa Calculadora de Tinta no site principal! Basta inserir as dimensões da parede, tipo de superfície e número de demãos para saber exactamente quantas embalagens precisa."}},{"@type":"Question","name":"Preciso de aplicar primário antes da tinta?","acceptedAnswer":{"@type":"Answer","text":"Regra geral: sim, especialmente em superfícies novas, porosas ou de cor muito diferente. O primário Insi sela a superfície e melhora a aderência. Em paredes já pintadas e em bom estado pode dispensar."}},{"@type":"Question","name":"Com que se dilui a tinta PVA?","acceptedAnswer":{"@type":"Answer","text":"A tinta PVA e todas as tintas de base aquosa Insi diluem-se com água limpa, no máximo 10 a 15%. Para base sintética use aguarrás mineral."}},{"@type":"Question","name":"Quantas demãos são necessárias?","acceptedAnswer":{"@type":"Answer","text":"Para a maioria dos produtos Insi recomendamos 2 demãos. A Borracha Líquida requer 2 a 3 demãos. Aguarde sempre a secagem completa antes de aplicar a demão seguinte."}},{"@type":"Question","name":"Posso devolver um produto?","acceptedAnswer":{"@type":"Answer","text":"Aceitamos devoluções de produtos não abertos e em perfeito estado no prazo de 7 dias após a recepção. Para embalagens abertas ou tinta já misturada não é possível devolução."}},{"@type":"Question","name":"O que acontece se o produto tiver defeito?","acceptedAnswer":{"@type":"Answer","text":"Em caso de defeito de fabrico comprovado, substituímos o produto imediatamente e sem custos adicionais. Tire uma fotografia e envie-nos via WhatsApp."}},{"@type":"Question","name":"Como posso ser distribuidor Insi?","acceptedAnswer":{"@type":"Answer","text":"Preencha o formulário na nossa página de distribuidores ou contacte-nos directamente. Analisamos todas as candidaturas em 48 horas."}}]}</script>
 </head>
@@ -483,5 +507,109 @@ renderCart(); refreshBadge();
 
 </script>
 <script>(function(){var y=new Date().getFullYear();document.querySelectorAll(".insiYr").forEach(function(e){e.textContent=y;});function syncWish(){try{var w=JSON.parse(localStorage.getItem("insiWish")||"[]");var n=Array.isArray(w)?w.length:0;var el=document.getElementById("wishCnt");if(el)el.textContent=n;}catch(e){}}syncWish();window.addEventListener("storage",function(e){if(e.key==="insiWish")syncWish();});})();</script>
+<!-- ═══ MODAL UNIVERSAL: SELEÇÃO DE LOJA WHATSAPP ═══ -->
+<div id="waPickerModal" class="wa-picker-overlay" onclick="if(event.target===this)closeWaPicker()" role="dialog" aria-modal="true" aria-labelledby="waPickerTitle">
+  <div class="wa-picker-box">
+    <button class="wa-picker-x" onclick="closeWaPicker()" aria-label="Fechar">✕</button>
+    <div class="wa-picker-head">
+      <div class="wa-picker-icon">💬</div>
+      <h3 id="waPickerTitle">Falar com qual loja?</h3>
+      <p>Escolha a loja mais próxima de si</p>
+    </div>
+    <div class="wa-picker-grid" id="waPickerGrid">
+      <button class="wa-store-card" data-phone="244926199669" data-name="Namibe">
+        <div class="wa-store-icon">🏭</div>
+        <div class="wa-store-info">
+          <strong>Namibe</strong>
+          <span class="wa-store-tag">Sede</span>
+          <small>Rua Juiz Ornelas (Torre do Tombo)</small>
+          <em>📞 926 199 669</em>
+        </div>
+      </button>
+      <button class="wa-store-card" data-phone="244952423990" data-name="Luanda">
+        <div class="wa-store-icon">🌆</div>
+        <div class="wa-store-info">
+          <strong>Luanda</strong>
+          <span class="wa-store-tag">Filial</span>
+          <small>Via Express, Kero Kilamba</small>
+          <em>📞 952 423 990</em>
+        </div>
+      </button>
+      <button class="wa-store-card" data-phone="244947906514" data-name="Lubango">
+        <div class="wa-store-icon">🏔</div>
+        <div class="wa-store-info">
+          <strong>Lubango</strong>
+          <span class="wa-store-tag">Filial</span>
+          <small>Bairro Lucrécia, Macon Executivo</small>
+          <em>📞 947 906 514</em>
+        </div>
+      </button>
+      <button class="wa-store-card" data-phone="244932009853" data-name="Huambo">
+        <div class="wa-store-icon">🌿</div>
+        <div class="wa-store-info">
+          <strong>Huambo</strong>
+          <span class="wa-store-tag">Filial</span>
+          <small>Bairro São João, Zona Industrial</small>
+          <em>📞 932 009 853</em>
+        </div>
+      </button>
+    </div>
+    <div class="wa-picker-foot">🇦🇴 Seg–Sex: 8h–18h · Sáb: 8h–13h</div>
+  </div>
+</div>
+
+<script>
+/* ═══ WHATSAPP STORE PICKER (UNIVERSAL) ═══ */
+(function(){
+  var pendingMsg = '';
+  
+  window.openWaPicker = function(msg){
+    pendingMsg = msg || '';
+    var m = document.getElementById('waPickerModal');
+    if(m){ m.classList.add('open'); document.body.style.overflow='hidden'; }
+  };
+  
+  window.closeWaPicker = function(){
+    var m = document.getElementById('waPickerModal');
+    if(m){ m.classList.remove('open'); document.body.style.overflow=''; }
+  };
+  
+  // Intercept all WhatsApp clicks across the page
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href*="wa.me/"]');
+    if(!a) return;
+    var href = a.getAttribute('href') || '';
+    // Only intercept the main number; if it's a store-specific number leave it
+    if(href.indexOf('wa.me/244926199669') === -1) return;
+    
+    e.preventDefault();
+    
+    // Extract any message from the original href
+    var msg = '';
+    var qIdx = href.indexOf('?text=');
+    if(qIdx !== -1){
+      msg = decodeURIComponent(href.substring(qIdx + 6));
+    }
+    openWaPicker(msg);
+  }, true);
+  
+  // Handle store selection
+  document.addEventListener('click', function(e){
+    var card = e.target.closest('.wa-store-card');
+    if(!card) return;
+    var phone = card.getAttribute('data-phone');
+    var storeName = card.getAttribute('data-name');
+    var text = pendingMsg || ('Olá Insi Tintas ' + storeName + '! 👋');
+    var url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(text);
+    closeWaPicker();
+    window.open(url, '_blank', 'noopener');
+  });
+  
+  // Close on ESC
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeWaPicker();
+  });
+})();
+</script>
 </body>
 </html>
