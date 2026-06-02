@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Página Não Encontrada – Insi Tintas</title>
+<meta name="description" content="A página que procura não existe. Explore o catálogo de tintas profissionais Insi Tintas ou contacte-nos via WhatsApp."/>
+<meta name="robots" content="noindex, follow"/>
+<meta property="og:title" content="Página Não Encontrada – Insi Tintas"/>
+<meta property="og:description" content="A página que procura não existe. Explore o catálogo de tintas profissionais Insi Tintas ou contacte-nos via WhatsApp."/>
+<meta property="og:url" content="https://insitintas.com/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Insi Tintas"/>
+<meta property="og:image" content="https://insitintas.com/og-image.jpg"/>
+<meta property="og:locale" content="pt_AO"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="icon" type="image/png" href="icon-192.png"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#D62828"/>
+<link rel="manifest" href="insi-manifest.json"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+
+:root{--p:#D62828;--pd:#9E1B1B;--a:#F7B731;--d:#111;--lg:#f5f5f5;--w:#fff;--mu:#888;--gr:#27ae60;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--w);color:var(--d);overflow-x:hidden;}
+.cs{height:5px;background:linear-gradient(90deg,#D62828,#e05c0f 16%,#F7B731 33%,#27ae60 50%,#1a6fe0 66%,#8e44ad 83%,#D62828);}
+.topbar{background:var(--d);color:#ccc;font-size:.76rem;padding:5px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;}
+.topbar a{color:var(--a);text-decoration:none;}
+nav{background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 60px;height:70px;box-shadow:0 2px 12px rgba(0,0,0,.07);position:sticky;top:0;z-index:900;}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+.logo-img{height:38px;width:auto;display:block;}
+.logo-img-foot{height:42px;filter:brightness(1.05);}
+@media(max-width:600px){.logo-img{height:32px;}}
+.logo-box{width:42px;height:42px;background:var(--p);border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#fff;}
+.logo-txt{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;color:var(--d);letter-spacing:2px;line-height:1;}
+.logo-txt em{color:var(--p);font-style:normal;}
+.nav-links{display:flex;gap:22px;list-style:none;}
+.nav-links a{text-decoration:none;color:var(--d);font-weight:500;font-size:.88rem;position:relative;transition:color .2s;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--p);transition:width .3s;}
+.nav-links a:hover{color:var(--p);}
+.nav-links a:hover::after{width:100%;}
+.nav-r{display:flex;align-items:center;gap:8px;}
+.nb{background:none;border:1.5px solid #e0e0e0;color:var(--d);padding:8px 14px;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:600;font-size:.8rem;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;position:relative;text-decoration:none;}
+.nb:hover{border-color:var(--p);color:var(--p);}
+.nb.red{background:var(--p);color:#fff;border-color:var(--p);}
+.nb.red:hover{background:var(--pd);}
+.cbadge{position:absolute;top:-7px;right:-7px;background:var(--a);color:#111;font-size:.6rem;font-weight:800;min-width:18px;height:18px;border-radius:9px;padding:0 4px;display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .2s;}
+.cbadge.on{transform:scale(1);}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;}
+.ham span{width:23px;height:2px;background:var(--d);border-radius:2px;transition:all .3s;}
+.ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.ham.open span:nth-child(2){opacity:0;}
+.ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+.mob-menu{display:none;position:fixed;top:70px;left:0;right:0;background:#fff;z-index:899;box-shadow:0 8px 24px rgba(0,0,0,.12);flex-direction:column;}
+.mob-menu.open{display:flex;}
+.mob-menu a{padding:14px 24px;border-bottom:1px solid #f0f0f0;font-weight:600;color:var(--d);text-decoration:none;font-size:.95rem;transition:color .2s;}
+.mob-menu a:hover{color:var(--p);}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1900;opacity:0;pointer-events:none;transition:opacity .3s;}
+.ov.on{opacity:1;pointer-events:all;}
+.cart-sb{position:fixed;top:0;right:-460px;width:430px;height:100vh;background:#fff;z-index:1901;display:flex;flex-direction:column;box-shadow:-6px 0 32px rgba(0,0,0,.15);transition:right .33s cubic-bezier(.4,0,.2,1);}
+.cart-sb.on{right:0;}
+.sb-hd{padding:18px 22px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;}
+.sb-hd h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;}
+.sb-x{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mu);line-height:1;transition:color .2s;}
+.sb-x:hover{color:var(--p);}
+.cart-list{flex:1;overflow-y:auto;padding:10px 18px;}
+.cart-empty{text-align:center;padding:50px 20px;color:var(--mu);}
+.c-item{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid #f2f2f2;align-items:center;}
+.c-thumb{width:58px;height:58px;border-radius:9px;background:var(--lg);flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.c-thumb img{width:100%;height:100%;object-fit:contain;}
+.c-inf{flex:1;min-width:0;}
+.c-brand{font-size:.64rem;color:var(--mu);text-transform:uppercase;}
+.c-name{font-weight:600;font-size:.82rem;margin:2px 0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.c-var{font-size:.7rem;color:#666;display:flex;align-items:center;gap:5px;margin-bottom:5px;}
+.c-dot{width:10px;height:10px;border-radius:50%;border:1px solid #ddd;flex-shrink:0;}
+.qctrl{display:flex;align-items:center;gap:7px;}
+.qb{width:25px;height:25px;border:1.5px solid #ddd;background:#fff;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;transition:all .15s;}
+.qb:hover{border-color:var(--p);color:var(--p);}
+.qn{font-weight:700;font-size:.88rem;min-width:16px;text-align:center;}
+.c-rm{background:none;border:none;color:#ccc;cursor:pointer;font-size:.8rem;margin-left:2px;transition:color .2s;}
+.c-rm:hover{color:var(--p);}
+.c-price{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;color:var(--p);white-space:nowrap;}
+.cart-ft{padding:14px 18px;border-top:1px solid #eee;background:var(--lg);}
+.cf-row{display:flex;justify-content:space-between;font-size:.82rem;color:var(--mu);margin-bottom:5px;}
+.cf-tot{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.cf-tot span{font-weight:700;font-size:.95rem;}
+.cf-val{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;color:var(--p);}
+.btn-cko{display:block;width:100%;background:var(--p);color:#fff;border:none;padding:14px;border-radius:10px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;text-align:center;text-decoration:none;transition:all .2s;}
+.btn-cko:hover{background:var(--pd);}
+.btn-cont{display:block;text-align:center;margin-top:9px;color:var(--mu);font-size:.8rem;cursor:pointer;background:none;border:none;font-family:'Outfit',sans-serif;text-decoration:underline;}
+footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.4fr;gap:40px;margin-bottom:34px;}
+.fb p{font-size:.85rem;line-height:1.7;margin:12px 0 16px;}
+.fsoc{display:flex;gap:9px;}
+.fsb{width:34px;height:34px;background:rgba(255,255,255,.07);border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;text-decoration:none;color:#fff;font-size:.85rem;}
+.fsb:hover{background:var(--p);}
+.fc h5{color:#fff;font-weight:700;margin-bottom:12px;font-size:.87rem;text-transform:uppercase;letter-spacing:.5px;}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.fc ul a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.82rem;transition:color .2s;}
+.fc ul a:hover{color:var(--a);}
+.fc ul li.ct{display:flex;align-items:flex-start;gap:9px;font-size:.8rem;margin-bottom:8px;}
+.fc ul li.ct span:first-child{color:var(--p);flex-shrink:0;margin-top:2px;}
+.fbot{border-top:1px solid rgba(255,255,255,.07);padding-top:20px;display:flex;justify-content:space-between;align-items:center;font-size:.77rem;flex-wrap:wrap;gap:8px;}
+.fbot a{color:var(--a);text-decoration:none;}
+.wa-wrap{position:fixed;bottom:26px;right:26px;z-index:900;display:flex;flex-direction:column;align-items:flex-end;gap:9px;}
+.wa-tip{background:#fff;border-radius:11px;padding:9px 13px;font-size:.79rem;font-weight:600;box-shadow:0 4px 18px rgba(0,0,0,.12);display:none;max-width:190px;text-align:center;}
+.wa-wrap:hover .wa-tip{display:block;}
+.wa-btn{width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,.4);text-decoration:none;font-size:1.7rem;transition:transform .2s;}
+.wa-btn:hover{transform:scale(1.1);}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--d);color:#fff;padding:11px 20px;border-radius:9px;font-size:.84rem;font-weight:500;z-index:9999;white-space:nowrap;box-shadow:0 6px 20px rgba(0,0,0,.2);transition:transform .3s;}
+.toast.on{transform:translateX(-50%) translateY(0);}
+.page-hero{background:linear-gradient(135deg,#0a0a0a,#1a0505);padding:56px 80px;color:#fff;}
+.page-hero h1{font-family:'Bebas Neue',sans-serif;font-size:3.8rem;letter-spacing:2px;margin-bottom:8px;}
+.page-hero h1 em{color:var(--a);font-style:normal;}
+.page-hero p{color:rgba(255,255,255,.68);font-size:1rem;max-width:560px;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:16px;}
+.breadcrumb a{color:rgba(255,255,255,.6);text-decoration:none;}
+.breadcrumb a:hover{color:var(--a);}
+.btn-p{background:var(--p);color:#fff;padding:12px 26px;border-radius:8px;font-weight:700;font-size:.92rem;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:all .2s;border:none;cursor:pointer;font-family:'Outfit',sans-serif;}
+.btn-p:hover{background:var(--pd);}
+.btn-o{background:transparent;color:var(--d);border:2px solid #ddd;padding:12px 26px;border-radius:8px;font-weight:600;font-size:.92rem;text-decoration:none;transition:all .2s;cursor:pointer;font-family:'Outfit',sans-serif;}
+.btn-o:hover{border-color:var(--p);color:var(--p);}
+@media(max-width:900px){
+  nav{padding:0 18px;}.nav-links{display:none;}.ham{display:flex;}
+  .topbar{padding:5px 18px;display:none;}
+  .page-hero,.foot-grid{padding-left:18px;padding-right:18px;}
+  footer{padding:40px 18px 20px;}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:24px;}
+  .cart-sb{width:100%;right:-100%;}
+}
+@media(max-width:600px){.foot-grid{grid-template-columns:1fr;}}
+
+
+.err-wrap{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;}
+.err-code{font-family:'Bebas Neue',sans-serif;font-size:10rem;line-height:1;background:linear-gradient(135deg,var(--p),var(--a));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.err-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:1px;margin-bottom:10px;}
+.err-desc{color:var(--mu);font-size:.95rem;max-width:440px;margin:0 auto 28px;line-height:1.7;}
+.err-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:36px;}
+.err-suggest{background:var(--lg);border-radius:14px;padding:24px 28px;max-width:560px;width:100%;text-align:left;}
+.err-suggest h4{font-weight:700;margin-bottom:14px;font-size:.92rem;}
+.err-links{display:flex;flex-direction:column;gap:8px;}
+.err-link{display:flex;align-items:center;gap:11px;padding:10px 13px;background:#fff;border-radius:9px;text-decoration:none;color:var(--d);font-size:.86rem;font-weight:500;transition:all .2s;border:1.5px solid transparent;}
+.err-link:hover{border-color:var(--p);color:var(--p);}
+.err-link .el-icon{font-size:1.3rem;flex-shrink:0;}
+.err-link .el-desc{font-size:.74rem;color:var(--mu);display:block;margin-top:1px;}
+.err-paint{font-size:6rem;margin-bottom:14px;animation:wobble 2s ease infinite;}
+@keyframes wobble{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+
+</style>
+</head>
+<body>
+<script>
+/* INSI TINTAS — BOOT v20250519 */
+(function(){
+  /* 1. Version check - clear old data */
+  var v='insi_v20250519';
+  if(localStorage.getItem('_insiVer')!==v){
+    try{
+      var keep=['insiCart_v3','insiWish','insiRecent','insiCookie','_insiVer'];
+      Object.keys(localStorage).forEach(function(k){
+        if(keep.indexOf(k)===-1)localStorage.removeItem(k);
+      });
+    }catch(e){}
+    localStorage.setItem('_insiVer',v);
+  }
+  /* 2. Clean corrupt cart */
+  try{
+    var raw=localStorage.getItem('insiCart_v3');
+    if(raw){
+      var c=JSON.parse(raw);
+      if(!Array.isArray(c)){localStorage.removeItem('insiCart_v3');}
+      else{
+        var ok=c.filter(function(i){return i&&i.id&&i.name&&i.price&&i.qty;});
+        if(ok.length!==c.length)localStorage.setItem('insiCart_v3',JSON.stringify(ok));
+      }
+    }
+  }catch(e){localStorage.removeItem('insiCart_v3');}
+  /* 3. Compatibility shim for old cached code */
+  window.insiGetCart=function(){return typeof getCart!=='undefined'?getCart():[];};
+  window.insiSaveCart=function(c){if(typeof saveCart!=='undefined')saveCart(c);};
+  window.insiRenderCart=function(){if(typeof renderCart!=='undefined')renderCart();};
+  window.insiAddCart=function(){if(typeof addCart!=='undefined')addCart.apply(null,arguments);};
+  window.insiGetWish=function(){return typeof getWish!=='undefined'?getWish():[];};
+  window.insiSaveWish=function(w){if(typeof saveWish!=='undefined')saveWish(w);};
+  window.insiIsWished=function(p){return typeof isWished!=='undefined'?isWished(p):false;};
+  window.insiFmt=function(n){return typeof fmt!=='undefined'?fmt(n):n+' Kz';};
+  window.insiImg=function(n){return typeof img!=='undefined'?img(n):'';};
+  /* 4. Error handler */
+  window.onerror=function(msg){
+    if(typeof msg==='string'&&msg.indexOf('is not defined')!==-1){
+      var k='_insiErrCount';
+      var cnt=parseInt(localStorage.getItem(k)||'0');
+      if(cnt<3){
+        localStorage.setItem(k,String(cnt+1));
+        window.location.reload(true);
+      } else {
+        localStorage.removeItem(k);
+      }
+    }
+    return false;
+  };
+})();
+</script>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div>📍 Namibe · Luanda · Lubango · Huambo &nbsp;|&nbsp; Seg–Sáb: 8h–18h</div>
+  <div class="tbr">
+    <span>📞 <a href="tel:+244926199669">926 199 669</a></span>
+    <span>✉️ <a href="mailto:geral@insitintas.com">geral@insitintas.com</a></span>
+    <span>🚚 Entrega em todo Angola</span>
+  </div>
+</div>
+<nav>
+  <a href="insi-tintas.html" class="logo"><img src="logo-nav.png" alt="Insi Tintas" class="logo-img"/></a>
+  <ul class="nav-links">
+    <li><a href="insi-tintas.html">Início</a></li>
+    <li><a href="insi-produtos.html">Produtos</a></li>
+    <li><a href="insi-blog.html">Dicas</a></li>
+    <li><a href="insi-sobre.html">Sobre Nós</a></li>
+    <li><a href="insi-distribuidores.html">Distribuidores</a></li>
+    <li><a href="insi-faq.html">FAQ</a></li>
+  </ul>
+  <div class="nav-r">
+    <a class="nb" href="insi-produtos.html" title="Lista de Desejos" aria-label="Lista de Desejos">❤ <span id="wishCnt">0</span></a>
+    <button class="nb red" onclick="toggleCart()" title="Carrinho" aria-label="Carrinho">🛒 <span id="cartCnt">0</span><span class="cbadge" id="cartBadge">0</span></button>
+    <button class="ham" id="hamBtn" onclick="toggleMob()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a href="insi-tintas.html" onclick="toggleMob()">🏠 Início</a>
+  <a href="insi-produtos.html" onclick="toggleMob()">🛍 Produtos</a>
+  <a href="insi-blog.html" onclick="toggleMob()">💡 Dicas</a>
+  <a href="insi-sobre.html" onclick="toggleMob()">ℹ Sobre Nós</a>
+  <a href="insi-distribuidores.html" onclick="toggleMob()">🤝 Distribuidores</a>
+  <a href="insi-faq.html" onclick="toggleMob()">❓ FAQ</a>
+  <a href="insi-tintas-checkout.html" onclick="toggleMob()">🛒 Checkout</a>
+</div>
+<div class="ov" id="cartOv" onclick="toggleCart()"></div>
+<div class="cart-sb" id="cartSb">
+  <div class="sb-hd"><h3>🛒 Carrinho</h3><button class="sb-x" onclick="toggleCart()">✕</button></div>
+  <div class="cart-list" id="cartList"></div>
+  <div class="cart-ft" id="cartFt" style="display:none">
+    <div class="cf-row"><span>Subtotal (<span id="cfCnt">0</span> art.)</span><span id="cfSub">0 Kz</span></div>
+    <div class="cf-row"><span>Entrega</span><span style="color:var(--gr);font-weight:600">Grátis</span></div>
+    <div class="cf-tot"><span>Total</span><span class="cf-val" id="cfTot">0 Kz</span></div>
+    <a href="insi-tintas-checkout.html" class="btn-cko">🔒 Finalizar Compra →</a>
+    <button class="btn-cont" onclick="toggleCart()">← Continuar</button>
+  </div>
+</div>
+<div class="wa-wrap">
+  <div class="wa-tip">Fale connosco! 👋</div>
+  <a class="wa-btn" href="https://wa.me/244926199669?text=Olá%20Insi%20Tintas!" target="_blank">💬</a>
+</div>
+<div class="toast" id="toast"></div>
+
+
+<div class="err-wrap">
+  <div class="err-paint">🪣</div>
+  <div class="err-code">404</div>
+  <div class="err-title">Página Não Encontrada</div>
+  <div class="err-desc">Parece que esta página não existe ou foi movida. Mas temos tintas para todos os gostos — vai certeza encontrar o que procura!</div>
+  <div class="err-actions">
+    <a href="insi-tintas.html" class="btn-p">🏠 Voltar à Loja</a>
+    <a href="insi-produtos.html" class="btn-o">🛍 Ver Produtos</a>
+  </div>
+  <div class="err-suggest">
+    <h4>🔍 Talvez esteja à procura de…</h4>
+    <div class="err-links">
+      <a href="insi-tintas.html" class="err-link"><span class="el-icon">🏠</span><div><span>Página Principal</span><span class="el-desc">Início, produtos em destaque, calculadora de tinta</span></div></a>
+      <a href="insi-produtos.html" class="err-link"><span class="el-icon">🛍</span><div><span>Catálogo de Produtos</span><span class="el-desc">13 produtos, filtros, comparador, lista de desejos</span></div></a>
+      <a href="insi-tintas-checkout.html" class="err-link"><span class="el-icon">🛒</span><div><span>Checkout / Finalizar Compra</span><span class="el-desc">Confirmar encomenda, pagamento e entrega</span></div></a>
+      <a href="insi-blog.html" class="err-link"><span class="el-icon">📝</span><div><span>Blog & Dicas</span><span class="el-desc">Guias de aplicação, decoração e novidades</span></div></a>
+      <a href="insi-faq.html" class="err-link"><span class="el-icon">❓</span><div><span>Perguntas Frequentes</span><span class="el-desc">Entrega, pagamento, produtos e aplicação</span></div></a>
+      <a href="https://wa.me/244926199669?text=Olá!%20Preciso%20de%20ajuda." target="_blank" class="err-link"><span class="el-icon">💬</span><div><span>WhatsApp – Falar Connosco</span><span class="el-desc">+244 926 199 669 · Resposta em minutos</span></div></a>
+    </div>
+  </div>
+</div>
+
+
+<footer id="contacto">
+  <div class="foot-grid">
+    <div class="fb">
+      <a href="insi-tintas.html" class="logo"><img src="logo-nav.png" alt="Insi Tintas" class="logo-img logo-img-foot"/></a>
+      <p>Tintas profissionais fabricadas em Angola desde 2009. Qualidade certificada, entrega em todo o país 🇦🇴</p>
+      <div class="fsoc">
+        <a href="https://facebook.com/insitintas" class="fsb" target="_blank" rel="noopener">f</a>
+        <a href="https://wa.me/244926199669" class="fsb" target="_blank" rel="noopener">💬</a>
+        <a href="mailto:geral@insitintas.com" class="fsb" target="_blank" rel="noopener">✉</a>
+      </div>
+    </div>
+    <div class="fc"><h5>Navegação</h5>
+      <ul>
+        <li><a href="insi-tintas.html">Início</a></li>
+        <li><a href="insi-produtos.html">Catálogo</a></li>
+        <li><a href="insi-blog.html">Dicas & Blog</a></li>
+        <li><a href="insi-sobre.html">Sobre Nós</a></li>
+        <li><a href="insi-distribuidores.html">Distribuidores</a></li>
+        <li><a href="insi-faq.html">FAQ</a></li>
+        <li><a href="insi-privacidade.html">Privacidade</a></li>
+        <li><a href="insi-tintas-checkout.html">Finalizar Compra</a></li>
+      </ul>
+    </div>
+    <div class="fc"><h5>Contactos</h5>
+      <ul>
+        <li class="ct"><span>📍</span><span><strong>Namibe</strong> — Rua Juiz Ornelas, Torre do Tombo<br/><a href="tel:+244926199669">☎ 926 199 669</a></span></li>
+        <li class="ct"><span>📍</span><span><strong>Luanda</strong> — Via Express SOMAG<br/><a href="tel:+244952423990">☎ 952 423 990</a></span></li>
+        <li class="ct"><span>📍</span><span><strong>Lubango</strong><br/><a href="tel:+244947906514">☎ 947 906 514</a></span></li>
+        <li class="ct"><span>📍</span><span><strong>Huambo</strong><br/><a href="tel:+244932009853">☎ 932 009 853</a></span></li>
+        <li class="ct"><span>✉️</span><span><a href="mailto:geral@insitintas.com">geral@insitintas.com</a></span></li>
+      </ul>
+    </div>
+    <div class="fc"><h5>Newsletter</h5>
+      <p style="font-size:.83rem;margin-bottom:10px">Promoções, dicas e novos produtos.</p>
+      <div style="display:flex;gap:6px">
+        <input type="email" id="nlEmail2" placeholder="O seu email" style="flex:1;padding:9px 12px;border-radius:8px;border:none;font-size:.84rem;font-family:Outfit,sans-serif;background:#2a2a2a;color:#fff;outline:none"/>
+        <button style="padding:9px 14px;background:#D62828;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.9rem" onclick="(function(){var el=document.getElementById('nlEmail2');if(!el||!el.value.includes('@')){alert('Email inválido');return;}try{var s=JSON.parse(localStorage.getItem('insiNewsletter')||'[]');if(!s.includes(el.value)){s.push(el.value);localStorage.setItem('insiNewsletter',JSON.stringify(s));}}catch(e){}el.value='';alert('Subscrito!');}())">→</button>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <span>© <span class="insiYr">2025</span> Insi Tintas · Todos os direitos reservados · Fabricado em Angola 🇦🇴</span>
+    <span><a href="insi-privacidade.html" style="color:#aaa">Privacidade</a> · <a href="insi-distribuidores.html" style="color:#aaa">Distribuidores</a> · <a href="insi-sobre.html" style="color:#aaa">Sobre Nós</a></span>
+  </div>
+</footer>
+<script>
+
+const CK='insiCart_v3';
+function getCart(){try{return JSON.parse(localStorage.getItem(CK)||'[]');}catch(e){return[];}}
+function saveCart(c){localStorage.setItem(CK,JSON.stringify(c));window.dispatchEvent(new StorageEvent('storage',{key:CK}));}
+function cartQty(c){return c.reduce((s,i)=>s+i.qty,0);}
+function cartTotal(c){return c.reduce((s,i)=>s+i.price*i.qty,0);}
+function fmt(n){return n.toLocaleString('pt-PT')+' Kz';}
+function removeCart(key){saveCart(getCart().filter(x=>x.key!==key));renderCart();refreshBadge();}
+function changeQty(key,d){const c=getCart(),i=c.find(x=>x.key===key);if(!i)return;i.qty+=d;if(i.qty<=0){removeCart(key);return;}saveCart(c);renderCart();refreshBadge();}
+function refreshBadge(){
+  const n=cartQty(getCart());
+  document.getElementById('cartCnt').textContent=n;
+  const b=document.getElementById('cartBadge');if(b){b.textContent=n;b.classList.toggle('on',n>0);}
+}
+function renderCart(){
+  var cart=getCart(),el=document.getElementById('cartList'),ft=document.getElementById('cartFt');
+  if(!cart.length){
+    el.innerHTML='<div class="cart-empty"><span style="font-size:2.5rem;display:block;margin-bottom:10px">🪣</span><p>Carrinho vazio.</p></div>';
+    if(ft)ft.style.display='none';
+    return;
+  }
+  if(ft)ft.style.display='block';
+  var tot=cartTotal(cart),cnt=cartQty(cart);
+  var cn=document.getElementById('cfCnt');if(cn)cn.textContent=cnt;
+  var cs=document.getElementById('cfSub');if(cs)cs.textContent=fmt(tot);
+  var ct=document.getElementById('cfTot');if(ct)ct.textContent=fmt(tot);
+  el.innerHTML=cart.map(function(i){
+    var imgSrc=i.img_data||'';
+    return '<div class="c-item">'
+      +'<div class="c-thumb"><img src="'+imgSrc+'" alt="" onerror="this.style.opacity=.2"/></div>'
+      +'<div class="c-inf">'
+      +'<div class="c-brand">'+i.brand+'</div>'
+      +'<div class="c-name">'+i.name+'</div>'
+      +'<div class="c-var"><span class="c-dot" style="background:'+i.colorHex+'"></span>'+i.colorName+' - '+i.size+'</div>'
+      +'<div class="qctrl">'
+      +'<button class="qb" data-key="'+i.key+'" data-d="-1" onclick="cartQtyBtn(this)">-</button>'
+      +'<span class="qn">'+i.qty+'</span>'
+      +'<button class="qb" data-key="'+i.key+'" data-d="1" onclick="cartQtyBtn(this)">+</button>'
+      +'<button class="c-rm" data-key="'+i.key+'" onclick="cartRmBtn(this)">x</button>'
+      +'</div></div>'
+      +'<div class="c-price">'+fmt(i.price*i.qty)+'</div>'
+      +'</div>';
+  }).join('');
+}
+function cartQtyBtn(btn){changeQty(btn.getAttribute('data-key'),parseInt(btn.getAttribute('data-d')));}
+function cartRmBtn(btn){removeCart(btn.getAttribute('data-key'));}
+function toggleCart(){document.getElementById('cartSb').classList.toggle('on');document.getElementById('cartOv').classList.toggle('on');}
+function toast(msg){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2600);}
+function toggleMob(){document.getElementById('hamBtn').classList.toggle('open');document.getElementById('mobMenu').classList.toggle('open');}
+window.addEventListener('storage',e=>{if(e.key===CK){renderCart();refreshBadge();}});
+
+
+
+renderCart(); refreshBadge();
+
+</script>
+<script>(function(){var y=new Date().getFullYear();document.querySelectorAll(".insiYr").forEach(function(e){e.textContent=y;});function syncWish(){try{var w=JSON.parse(localStorage.getItem("insiWish")||"[]");var n=Array.isArray(w)?w.length:0;var el=document.getElementById("wishCnt");if(el)el.textContent=n;}catch(e){}}syncWish();window.addEventListener("storage",function(e){if(e.key==="insiWish")syncWish();});})();</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /insi-tintas-checkout.html
+
+Sitemap: https://insitintas.com/sitemap.xml
