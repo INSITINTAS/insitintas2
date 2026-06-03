@@ -184,7 +184,7 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
 .tipo-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--p);margin-bottom:10px;letter-spacing:.5px;}
 .tipo-ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:18px;}
 .tipo-ul li{display:flex;align-items:center;gap:8px;font-size:.85rem;color:#444;}
-.tipo-ul li::before{content:'<svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12l5 5L20 6"/></svg>';color:var(--gr);font-weight:700;flex-shrink:0;}
+.tipo-ul li::before{content:'\2713';color:var(--gr);font-weight:700;flex-shrink:0;}
 .form-sec{background:linear-gradient(135deg,#0a0a0a,#1a0505);padding:64px 80px;}
 .form-sec h2{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:1px;margin-bottom:8px;color:#fff;}
 .form-sec h2 em{color:var(--a);font-style:normal;}
@@ -222,7 +222,8 @@ a.dprov:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.08);
 #scrollTop{position:fixed;bottom:90px;right:26px;width:44px;height:44px;background:#111;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:890;opacity:0;transform:translateY(20px);transition:all .3s;pointer-events:none;}
 #scrollTop.visible{opacity:1;transform:translateY(0);pointer-events:all;}
 #scrollTop:hover{background:#D62828;}
-.fade-up{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease;}
+.fade-up{opacity:1;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease;}
+.js-anim .fade-up{opacity:0;transform:translateY(20px);}
 .fade-up.visible{opacity:1;transform:translateY(0);}
 
 
@@ -630,11 +631,13 @@ renderCart(); refreshBadge();
   btn.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
   document.body.appendChild(btn);
   window.addEventListener('scroll',()=>btn.classList.toggle('visible',window.scrollY>400),{passive:true});
-  // Animate cards/sections
+  // Animate cards/sections (progressive enhancement)
+  document.documentElement.classList.add('js-anim');
   const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
   document.querySelectorAll('.vant-card,.tipo-card,.dprov,.missao-card,.eq-card,.tl-item,.blog-card,.rv,.bc-body,.priv-section,.sidebar-widget').forEach(el=>{
     el.classList.add('fade-up');obs.observe(el);
   });
+  setTimeout(function(){document.querySelectorAll('.fade-up:not(.visible)').forEach(function(el){el.classList.add('visible');});},1200);
 })();
 
 </script>
