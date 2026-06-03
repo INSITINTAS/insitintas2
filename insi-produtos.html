@@ -169,7 +169,7 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
 .price-filter label{font-size:.75rem;font-weight:700;color:var(--mu);white-space:nowrap;}
 .price-range{width:100px;accent-color:var(--p);}
 .price-val{font-size:.75rem;font-weight:700;color:var(--p);white-space:nowrap;min-width:58px;}
-.view-toggle{display:flex;gap:4px;margin-left:auto;}
+.view-toggle{display:flex;gap:4px;}
 .vt-btn{width:33px;height:33px;border:1.5px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .2s;}
 .vt-btn.on{border-color:var(--p);background:var(--p);color:#fff;}
 .results-bar{padding:11px 80px;background:var(--lg);font-size:.83rem;color:var(--mu);display:flex;justify-content:space-between;align-items:center;}
@@ -439,11 +439,11 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
     <span class="price-val" id="priceVal">Todos</span>
   </div>
   <div class="view-toggle">
-    <button class="vt-btn on" id="vGrid" onclick="setView('grid')" title="Grelha">⊞</button>
+    <button class="vt-btn on" id="vGrid" onclick="setView('grid')" title="Grelha"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg></button>
     <button class="vt-btn" id="vList" onclick="setView('list')" title="Lista"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
-  <input type="text" id="prodSearch" placeholder="<svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-3.5-3.5"/></svg> Pesquisar..." oninput="applyFilters()"
-    style="padding:6px 12px;border:1.5px solid #ddd;border-radius:20px;font-family:'Outfit',sans-serif;font-size:.79rem;outline:none;width:180px"/>
+  <input type="text" id="prodSearch" placeholder="Pesquisar..." oninput="applyFilters()"
+    style="padding:7px 14px;border:1.5px solid #ddd;border-radius:20px;font-family:'Outfit',sans-serif;font-size:.79rem;outline:none;width:200px;margin-left:auto"/>
 </div>
 
 <div class="results-bar">
