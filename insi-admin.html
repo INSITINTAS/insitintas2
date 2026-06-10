@@ -23,7 +23,8 @@ input,select,textarea{font-family:inherit;}
 .login-logo{font-family:'Bebas Neue';font-size:42px;letter-spacing:2px;color:var(--red);line-height:.9;}
 .login-logo small{display:block;font-family:'Outfit';font-size:11px;letter-spacing:6px;color:var(--navy);font-weight:600;margin-top:2px;}
 .login-card h1{font-size:16px;font-weight:600;color:var(--mut);margin:18px 0 22px;}
-.login-card input{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:11px;font-size:15px;text-align:center;letter-spacing:3px;transition:border .15s;}
+.login-card input{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:11px;font-size:15px;text-align:center;transition:border .15s;margin-bottom:10px;}
+.login-card input#pwd{letter-spacing:2px;}
 .login-card input:focus{outline:none;border-color:var(--red);}
 .login-card button{width:100%;margin-top:14px;padding:13px;background:var(--red);color:#fff;border-radius:11px;font-weight:700;font-size:15px;transition:background .15s;}
 .login-card button:hover{background:var(--red-d);}
@@ -147,9 +148,10 @@ tr:hover td{background:#FAFBFC;}
   <div class="login-card">
     <div class="login-logo">INSI<small>TINTAS</small></div>
     <h1>Painel de Administração</h1>
-    <input type="password" id="pwd" placeholder="••••••" maxlength="40" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <input type="email" id="email" placeholder="email" value="geral@insitintas.com" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <input type="password" id="pwd" placeholder="palavra-passe" maxlength="60" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
     <button onclick="doLogin()">Entrar</button>
-    <div class="login-err" id="loginErr">Palavra-passe incorreta.</div>
+    <div class="login-err" id="loginErr">Email ou palavra-passe incorretos.</div>
     <div class="login-hint">Acesso reservado à equipa Insi Tintas</div>
   </div>
 </div>
@@ -184,7 +186,7 @@ const SOBRE_DATA = {"hero1":"A Insi Tintas nasceu em 2009 na cidade do Namibe co
 /* ───────── SUPABASE (sincronização com o servidor) ───────── */
 const SB_URL = "https://ozgfxearzljisjafjpji.supabase.co";
 const SB_KEY = "sb_publishable_gglnLbgyyPf2sKoyL1p7bQ_Bx8hz7aM";
-const ADMIN_EMAIL = "COLOQUE_O_SEU_EMAIL_AQUI"; /* email do utilizador criado no Supabase */
+const ADMIN_EMAIL = "geral@insitintas.com"; /* email do utilizador criado no Supabase */
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
 /* stock: o site usa 'in'/'low'/'out'; o servidor guarda um número */
@@ -232,6 +234,31 @@ async function sbDeleteProduct(id){
   return true;
 }
 
+/* ── Conteúdos genéricos (FAQ, Dicas, Sobre, Contactos, Pedidos) ──
+   Guardados na tabela 'conteudos' como { chave TEXT (PK), valor JSONB } */
+async function sbLoadDoc(chave){
+  try{
+    const { data, error } = await sb.from('conteudos').select('valor').eq('chave', chave).maybeSingle();
+    if(error){ console.error('Supabase load '+chave+':', error); return null; }
+    return data ? data.valor : null;
+  }catch(e){ console.error(e); return null; }
+}
+async function sbSaveDoc(chave, valor){
+  try{
+    const { error } = await sb.from('conteudos').upsert({ chave: chave, valor: valor }, { onConflict:'chave' });
+    if(error){ console.error('Supabase save '+chave+':', error); return false; }
+    return true;
+  }catch(e){ console.error(e); return false; }
+}
+/* pedidos: tabela própria 'pedidos' (inserida pelo checkout) */
+async function sbLoadPedidos(){
+  try{
+    const { data, error } = await sb.from('pedidos').select('dados').order('id',{ascending:false});
+    if(error){ console.error('Supabase pedidos:', error); return null; }
+    return data.map(function(r){ return r.dados; });
+  }catch(e){ console.error(e); return null; }
+}
+
 var PWD_HASH = null; // definido abaixo
 // palavra-passe: "insi2026" (podes mudar — ver instruções)
 var ADMIN_PWD = 'insi2026';
@@ -253,9 +280,11 @@ var state = {
 
 /* ── LOGIN ── */
 async function doLogin(){
+  var emEl=document.getElementById('email');
+  var email=(emEl&&emEl.value?emEl.value:ADMIN_EMAIL).trim();
   var v=document.getElementById('pwd').value;
   var err=document.getElementById('loginErr');
-  const { error } = await sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password: v });
+  const { error } = await sb.auth.signInWithPassword({ email: email, password: v });
   if(error){
     err.style.display='block';
     document.getElementById('pwd').value=''; document.getElementById('pwd').focus();
@@ -285,17 +314,25 @@ async function loadData(){
     if(prods){ state.products = prods; try{localStorage.setItem('insiAdminProducts',JSON.stringify(prods));}catch(e){} }
     else { var pc=localStorage.getItem('insiAdminProducts'); if(pc) state.products=JSON.parse(pc); }
   }catch(e){ var pc=localStorage.getItem('insiAdminProducts'); if(pc) state.products=JSON.parse(pc); }
-  // Restantes secções continuam locais por agora
+  // Restantes secções: servidor primeiro, com fallback ao local
   try{
-    var o=localStorage.getItem('insiOrders'); if(o) state.orders=JSON.parse(o);
-    var s=localStorage.getItem('insiSite'); if(s) state.site=Object.assign(state.site,JSON.parse(s));
-    var fq=localStorage.getItem('insiFaq'); if(fq) state.faq=JSON.parse(fq);
-    var bl=localStorage.getItem('insiBlog'); if(bl) state.blog=JSON.parse(bl);
-    var sb2=localStorage.getItem('insiSobre'); if(sb2) state.sobre=Object.assign(state.sobre,JSON.parse(sb2));
-  }catch(e){}
+    var srvFaq = await sbLoadDoc('faq');     if(srvFaq) state.faq=srvFaq;     else { var fq=localStorage.getItem('insiFaq'); if(fq) state.faq=JSON.parse(fq); }
+    var srvBlog= await sbLoadDoc('blog');    if(srvBlog)state.blog=srvBlog;   else { var bl=localStorage.getItem('insiBlog'); if(bl) state.blog=JSON.parse(bl); }
+    var srvSob = await sbLoadDoc('sobre');   if(srvSob) state.sobre=Object.assign(state.sobre,srvSob); else { var s2=localStorage.getItem('insiSobre'); if(s2) state.sobre=Object.assign(state.sobre,JSON.parse(s2)); }
+    var srvSite= await sbLoadDoc('site');    if(srvSite)state.site=Object.assign(state.site,srvSite);   else { var s=localStorage.getItem('insiSite'); if(s) state.site=Object.assign(state.site,JSON.parse(s)); }
+    var srvOrd = await sbLoadPedidos(); if(srvOrd) state.orders=srvOrd;  else { var o=localStorage.getItem('insiOrders'); if(o) state.orders=JSON.parse(o); }
+  }catch(e){
+    try{
+      var o=localStorage.getItem('insiOrders'); if(o) state.orders=JSON.parse(o);
+      var s=localStorage.getItem('insiSite'); if(s) state.site=Object.assign(state.site,JSON.parse(s));
+      var fq=localStorage.getItem('insiFaq'); if(fq) state.faq=JSON.parse(fq);
+      var bl=localStorage.getItem('insiBlog'); if(bl) state.blog=JSON.parse(bl);
+      var s2=localStorage.getItem('insiSobre'); if(s2) state.sobre=Object.assign(state.sobre,JSON.parse(s2));
+    }catch(e2){}
+  }
 }
 function saveProducts(){ try{localStorage.setItem('insiAdminProducts',JSON.stringify(state.products));}catch(e){} }
-function saveSite(){ try{localStorage.setItem('insiSite',JSON.stringify(state.site));}catch(e){} }
+function saveSite(){ try{localStorage.setItem('insiSite',JSON.stringify(state.site));}catch(e){} sbSaveDoc('site', state.site); }
 
 /* ── NAV ── */
 var NAV=[
@@ -361,7 +398,7 @@ function renderDash(){
   html+='</div>';
   // top produtos
   html+='<div class="panel"><h3>'+navIco('<path d="M3 3v18h18"/><path d="M7 14l3-3 4 4 5-6"/>')+' Produtos Mais Pedidos</h3>';
-  if(top.length===0){ html+='<p style="color:var(--mut);font-size:14px">Ainda não há pedidos registados neste dispositivo.</p>'; }
+  if(top.length===0){ html+='<p style="color:var(--mut);font-size:14px">Ainda não há pedidos registados.</p>'; }
   else {
     html+='<div class="tbl-wrap"><table><thead><tr><th>Produto</th><th>Qtd. Pedida</th></tr></thead><tbody>'
       +top.map(function(t){return '<tr><td class="t-name">'+esc(t[0])+'</td><td><b>'+t[1]+'</b></td></tr>';}).join('')
@@ -475,10 +512,10 @@ function exportProducts(){
 function renderOrders(){
   loadData();
   var O=state.orders;
-  var html='<div class="page-title">Pedidos</div><div class="page-sub">Encomendas registadas neste dispositivo</div>';
+  var html='<div class="page-title">Pedidos</div><div class="page-sub">Encomendas recebidas do site</div>';
   if(!O.length){
     html+='<div class="panel"><div class="empty">'+navIco('<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 9h6M9 13h6"/>')
-      +'<h4>Ainda não há pedidos</h4><p>Os pedidos feitos no site (neste dispositivo/navegador) aparecem aqui.<br/>Pedidos de clientes noutros telemóveis não são visíveis sem um servidor.</p></div></div>';
+      +'<h4>Ainda não há pedidos</h4><p>Os pedidos feitos no site aparecem aqui automaticamente.</p></div></div>';
   } else {
     html+='<div class="toolbar"><button class="btn btn-out" onclick="exportOrders()">'+navIco('<path d="M12 3v12M7 10l5 5 5-5"/>')+' Exportar CSV</button>'
       +'<button class="btn btn-out" onclick="clearOrders()">Limpar Tudo</button></div>';
@@ -515,7 +552,7 @@ function exportOrders(){
   var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c==null?'':c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
   dl(new Blob([csv],{type:'text/csv'}),'pedidos_insi.csv');toast('CSV exportado');
 }
-function clearOrders(){ if(!confirm('Apagar todos os pedidos guardados?'))return; state.orders=[]; try{localStorage.removeItem('insiOrders');}catch(e){} renderOrders();toast('Pedidos apagados'); }
+function clearOrders(){ if(!confirm('Apagar todos os pedidos guardados?'))return; state.orders=[]; try{localStorage.removeItem('insiOrders');}catch(e){} try{ sb.from('pedidos').delete().neq('id',0).then(function(){}); }catch(e){} renderOrders();toast('Pedidos apagados'); }
 
 /* ═══ CONTACTOS & TEXTOS ═══ */
 function renderSite(){
@@ -654,7 +691,12 @@ function saveSobreForm(){
 }
 
 /* export genérico FAQ/blog/sobre */
-function saveStore(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function saveStore(k,v){
+  try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}
+  // espelhar no servidor
+  var map={insiFaq:'faq',insiBlog:'blog',insiSobre:'sobre',insiSite:'site'};
+  if(map[k]){ sbSaveDoc(map[k], v); }
+}
 function exportData(which){
   if(which==='faq'){
     dl(new Blob(['const FAQS = '+JSON.stringify(state.faq)+';'],{type:'text/plain'}),'FAQS_atualizado.txt');

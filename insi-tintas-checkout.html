@@ -265,6 +265,13 @@ footer{background:#111;color:#ccc;}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* Supabase — registo de pedidos no servidor */
+var SB_URL="https://ozgfxearzljisjafjpji.supabase.co";
+var SB_KEY="sb_publishable_gglnLbgyyPf2sKoyL1p7bQ_Bx8hz7aM";
+var _sb=null; try{ _sb=supabase.createClient(SB_URL,SB_KEY); }catch(e){}
+</script>
 </head>
 <body>
 <script>
@@ -716,16 +723,23 @@ function submitOrderToStore(waPhone, storeName){
     window._lastOrder={msg:wMsg,phone:waPhone,orderN:orderN};
 
     // Guardar pedido para o painel de admin (localStorage deste dispositivo)
+    var _novoPedido={
+      orderN:orderN, date:new Date().toLocaleString('pt-PT'),
+      nome:nome, tel:tel, email:email, tipo:tipo,
+      store:storeName, loc:loc, pay:payL, notes:notes, total:total,
+      items:_cart.map(function(i){return {name:i.name,colorName:i.colorName,size:i.size,qty:i.qty,price:i.price};})
+    };
     try{
       var _orders=JSON.parse(localStorage.getItem('insiOrders')||'[]');
-      _orders.push({
-        orderN:orderN, date:new Date().toLocaleString('pt-PT'),
-        nome:nome, tel:tel, email:email, tipo:tipo,
-        store:storeName, loc:loc, pay:payL, notes:notes, total:total,
-        items:_cart.map(function(i){return {name:i.name,colorName:i.colorName,size:i.size,qty:i.qty,price:i.price};})
-      });
+      _orders.push(_novoPedido);
       localStorage.setItem('insiOrders',JSON.stringify(_orders));
     }catch(e){}
+    // Gravar no servidor (para aparecer no painel de admin em qualquer dispositivo)
+    if(_sb){
+      _sb.from('pedidos').insert({ order_n:orderN, dados:_novoPedido }).then(function(r){
+        if(r&&r.error) console.error('Supabase pedido:', r.error);
+      });
+    }
 
     // Also generate PDF
     generateOrderPDF(orderN, nome, tel, email, tipo, loc, payL, notes, total, storeName, itemsHtml);
