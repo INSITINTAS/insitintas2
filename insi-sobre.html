@@ -214,7 +214,8 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
 #scrollTop{position:fixed;bottom:90px;right:26px;width:44px;height:44px;background:#111;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:890;opacity:0;transform:translateY(20px);transition:all .3s;pointer-events:none;}
 #scrollTop.visible{opacity:1;transform:translateY(0);pointer-events:all;}
 #scrollTop:hover{background:#D62828;}
-.fade-up{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease;}
+.fade-up{opacity:1;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease;}
+.js-anim .fade-up{opacity:0;transform:translateY(20px);}
 .fade-up.visible{opacity:1;transform:translateY(0);}
 
 
@@ -367,9 +368,9 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
   <div class="sobre-img"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 21V10l6 4V10l6 4V6l6 3v12z"/><path d="M7 21v-4M12 21v-4M17 21v-4"/></svg></div>
   <div class="sobre-text">
     <h2>FEITOS EM ANGOLA,<br/>PARA <em>ANGOLA</em></h2>
-    <p>A Insi Tintas nasceu em 2009 na cidade do Namibe com uma missão clara: produzir tintas de alta qualidade em Angola, para os angolanos, com orgulho e responsabilidade.</p>
-    <p>Ao longo de mais de 15 anos, crescemos de uma pequena unidade de produção para uma das marcas de referência no sector de tintas e revestimentos em Angola, com presença em 4 províncias e mais de 12.000 clientes satisfeitos.</p>
-    <p>Os nossos produtos são desenvolvidos tendo em conta o clima tropical angolano, a intensidade dos raios UV e as condições únicas de construção em Angola — garantindo resultados superiores aos produtos importados.</p>
+    <p data-edit="hero1">A Insi Tintas nasceu em 2009 na cidade do Namibe com uma missão clara: produzir tintas de alta qualidade em Angola, para os angolanos, com orgulho e responsabilidade.</p>
+    <p data-edit="hist1">Ao longo de mais de 15 anos, crescemos de uma pequena unidade de produção para uma das marcas de referência no sector de tintas e revestimentos em Angola, com presença em 4 províncias e mais de 12.000 clientes satisfeitos.</p>
+    <p data-edit="hist2">Os nossos produtos são desenvolvidos tendo em conta o clima tropical angolano, a intensidade dos raios UV e as condições únicas de construção em Angola — garantindo resultados superiores aos produtos importados.</p>
     <div style="display:flex;gap:12px;margin-top:22px;flex-wrap:wrap">
       <a href="insi-tintas.html#produtos" class="btn-p"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 4h2l2.2 11h10.6L20 7H6"/><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/></svg> Ver Produtos</a>
       <a href="insi-distribuidores.html" class="btn-o"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4"/><path d="M12 11v10"/></svg> Ser Distribuidor</a>
@@ -381,17 +382,17 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
   <div class="missao-card">
     <div class="missao-icon"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg></div>
     <h3>Missão</h3>
-    <p>Produzir tintas e revestimentos de alta qualidade que satisfaçam as necessidades do mercado angolano, contribuindo para o desenvolvimento do país com produtos nacionais certificados.</p>
+    <p data-edit="missao">Produzir tintas e revestimentos de alta qualidade que satisfaçam as necessidades do mercado angolano, contribuindo para o desenvolvimento do país com produtos nacionais certificados.</p>
   </div>
   <div class="missao-card">
     <div class="missao-icon"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/></svg></div>
     <h3>Visão</h3>
-    <p>Ser a marca de tintas líder em Angola até 2030, expandindo a nossa presença para todas as províncias e mercados da SADC, mantendo sempre o orgulho da produção nacional.</p>
+    <p data-edit="visao">Ser a marca de tintas líder em Angola até 2030, expandindo a nossa presença para todas as províncias e mercados da SADC, mantendo sempre o orgulho da produção nacional.</p>
   </div>
   <div class="missao-card">
     <div class="missao-icon"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 4h12l3 5-9 11L3 9z"/><path d="M3 9h18M9 4l-3 5 6 11M15 4l3 5-6 11"/></svg></div>
     <h3>Valores</h3>
-    <p>Qualidade sem compromissos, inovação constante, respeito pelo ambiente, honestidade com os nossos clientes e orgulho genuíno na identidade angolana.</p>
+    <p data-edit="valores">Qualidade sem compromissos, inovação constante, respeito pelo ambiente, honestidade com os nossos clientes e orgulho genuíno na identidade angolana.</p>
   </div>
 </div>
 
@@ -472,7 +473,7 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
 
 <div class="cta-sobre">
   <h2>PRONTO PARA <em>TRABALHAR CONNOSCO?</em></h2>
-  <p>Seja como cliente, distribuidor ou parceiro, estamos prontos para construir Angola juntos.</p>
+  <p data-edit="cta">Seja como cliente, distribuidor ou parceiro, estamos prontos para construir Angola juntos.</p>
   <div class="cta-btns">
     <a href="insi-tintas.html#produtos" class="btn-p"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 4h2l2.2 11h10.6L20 7H6"/><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/></svg> Ver Produtos</a>
     <a href="insi-distribuidores.html" class="btn-p" style="background:var(--a);color:#111"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4"/><path d="M12 11v10"/></svg> Ser Distribuidor</a>
@@ -604,11 +605,13 @@ renderCart(); refreshBadge();
   btn.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
   document.body.appendChild(btn);
   window.addEventListener('scroll',()=>btn.classList.toggle('visible',window.scrollY>400),{passive:true});
-  // Animate cards/sections
+  // Animate cards/sections (progressive enhancement)
+  document.documentElement.classList.add('js-anim');
   const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
   document.querySelectorAll('.vant-card,.tipo-card,.dprov,.missao-card,.eq-card,.tl-item,.blog-card,.rv,.bc-body,.priv-section,.sidebar-widget').forEach(el=>{
     el.classList.add('fade-up');obs.observe(el);
   });
+  setTimeout(function(){document.querySelectorAll('.fade-up:not(.visible)').forEach(function(el){el.classList.add('visible');});},1200);
 })();
 
 </script>
@@ -807,6 +810,19 @@ renderCart(); refreshBadge();
   } else {
     init();
   }
+})();
+</script>
+
+<script>
+/* Aplica textos editados no painel de administração (insiSobre) */
+(function(){
+  try{
+    var ov = JSON.parse(localStorage.getItem('insiSobre')||'{}');
+    Object.keys(ov).forEach(function(id){
+      var el = document.querySelector('[data-edit="'+id+'"]');
+      if(el && ov[id]) el.textContent = ov[id];
+    });
+  }catch(e){}
 })();
 </script>
 </body>

@@ -715,6 +715,18 @@ function submitOrderToStore(waPhone, storeName){
     document.getElementById('waBtn').href='https://wa.me/'+waPhone+'?text='+encodeURIComponent(wMsg);
     window._lastOrder={msg:wMsg,phone:waPhone,orderN:orderN};
 
+    // Guardar pedido para o painel de admin (localStorage deste dispositivo)
+    try{
+      var _orders=JSON.parse(localStorage.getItem('insiOrders')||'[]');
+      _orders.push({
+        orderN:orderN, date:new Date().toLocaleString('pt-PT'),
+        nome:nome, tel:tel, email:email, tipo:tipo,
+        store:storeName, loc:loc, pay:payL, notes:notes, total:total,
+        items:_cart.map(function(i){return {name:i.name,colorName:i.colorName,size:i.size,qty:i.qty,price:i.price};})
+      });
+      localStorage.setItem('insiOrders',JSON.stringify(_orders));
+    }catch(e){}
+
     // Also generate PDF
     generateOrderPDF(orderN, nome, tel, email, tipo, loc, payL, notes, total, storeName, itemsHtml);
 
