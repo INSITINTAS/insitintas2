@@ -116,8 +116,11 @@ tr:hover td{background:#FAFBFC;}
 .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--red);}
 .fg textarea{resize:vertical;min-height:70px;}
 .fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.size-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:center;}
+.size-row{display:grid;grid-template-columns:1fr 1fr 52px auto;gap:8px;margin-bottom:8px;align-items:center;}
 .size-row input{margin:0;}
+.size-row .m_card_radio{width:18px;height:18px;justify-self:center;accent-color:#C81E1E;cursor:pointer;}
+.size-head{font-size:10px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;}
+.size-head span:nth-child(3){text-align:center;}
 .size-del{width:32px;height:32px;border-radius:8px;background:var(--bg);color:var(--mut);flex:none;font-size:13px;}
 .size-del:hover{background:#fde8e8;color:#c81e1e;}
 .hint{font-size:11px;color:var(--mut);margin-top:4px;}
@@ -208,7 +211,7 @@ function rowToProduct(r){
     price: r.preco||0, stock: numToStock(r.stock),
     sizes: r.tamanhos||[], priceBySize: r.precos||{},
     img: r.imagem||'', ficha: r.ficha_tecnica||'',
-    brand:'Insi Tintas', colors:[], ph:1
+    brand:'Insi Tintas', colors:[], ph: r.imagem?0:1
   };
 }
 /* painel -> servidor */
@@ -463,7 +466,7 @@ function drawProdTable(){
   document.getElementById('prodTableWrap').innerHTML=html;
 }
 function opt(v,l,cur){return '<option value="'+v+'"'+(cur===v?' selected':'')+'>'+l+'</option>';}
-function quickPrice(id,v){var p=state.products.find(function(x){return x.id===id;});if(p){p.price=parseInt(v)||0;saveProducts();state.dirty=true;sbSaveProduct(p).then(function(ok){toast(ok?'Preço gravado no servidor':'Erro no servidor — guardado localmente');});}}
+function quickPrice(id,v){var p=state.products.find(function(x){return x.id===id;});if(p){var val=parseInt(v)||0;var old=p.price;p.price=val;/* manter coerência: atualizar o tamanho cujo preço era o do cartão (senão o 1º) */if(p.sizes&&p.sizes.length){p.priceBySize=Object.assign({},p.priceBySize||{});var alvo=p.sizes[0];for(var i=0;i<p.sizes.length;i++){if(p.priceBySize[p.sizes[i]]===old){alvo=p.sizes[i];break;}}p.priceBySize[alvo]=val;}saveProducts();state.dirty=true;sbSaveProduct(p).then(function(ok){toast(ok?'Preço gravado no servidor':'Erro no servidor — guardado localmente');});}}
 function quickStock(id,v){var p=state.products.find(function(x){return x.id===id;});if(p){p.stock=v;saveProducts();state.dirty=true;sbSaveProduct(p).then(function(ok){toast(ok?'Stock gravado no servidor':'Erro no servidor — guardado localmente');});}}
 function delProd(id){
   var p=state.products.find(function(x){return x.id===id;}); if(!p)return;
@@ -494,25 +497,30 @@ function prodSizesField(p){
   var pbs=(p.priceBySize&&typeof p.priceBySize==='object')?p.priceBySize:{};
   var sizes=(p.sizes&&p.sizes.length)?p.sizes:Object.keys(pbs);
   if(!sizes.length) sizes=[''];
-  var rows=sizes.map(function(s){
+  /* qual tamanho corresponde ao preço do cartão? (coincide com p.price, senão o 1º) */
+  var cardIdx=0;
+  for(var i=0;i<sizes.length;i++){ if(pbs[sizes[i]]===p.price){ cardIdx=i; break; } }
+  var rows=sizes.map(function(s,i){
     var preco=(pbs[s]!=null)?pbs[s]:(p.price||'');
-    return sizeRowHtml(s,preco);
+    return sizeRowHtml(s,preco,i===cardIdx);
   }).join('');
   return '<div class="fg"><label>Tamanhos e preços (Kz)</label>'
+    +'<div class="size-row size-head"><span>Tamanho</span><span>Preço</span><span title="Preço que aparece no cartão do produto">Cartão</span><span></span></div>'
     +'<div id="m_sizes_wrap">'+rows+'</div>'
     +'<button type="button" class="btn btn-out btn-sm" onclick="addSizeRow()" style="margin-top:6px">+ Adicionar tamanho</button>'
-    +'<div class="hint">O primeiro tamanho é o preço que aparece no cartão do produto.</div></div>';
+    +'<div class="hint">Marque «Cartão» no tamanho cujo preço deve aparecer na lista de produtos.</div></div>';
 }
-function sizeRowHtml(size,preco){
+function sizeRowHtml(size,preco,isCard){
   return '<div class="size-row">'
     +'<input type="text" class="m_size_label" placeholder="ex: 1L, 5kg, Unid." value="'+esc(size||'')+'"/>'
     +'<input type="number" class="m_size_price" placeholder="Preço" value="'+(preco!=null?preco:'')+'"/>'
+    +'<input type="radio" name="m_card_price" class="m_card_radio"'+(isCard?' checked':'')+' title="Preço do cartão"/>'
     +'<button type="button" class="size-del" title="Remover" onclick="this.parentNode.remove()">✕</button>'
   +'</div>';
 }
 function addSizeRow(){
   var wrap=document.getElementById('m_sizes_wrap');
-  if(wrap){ var d=document.createElement('div'); d.innerHTML=sizeRowHtml('',''); wrap.appendChild(d.firstChild); }
+  if(wrap){ var d=document.createElement('div'); d.innerHTML=sizeRowHtml('','',false); wrap.appendChild(d.firstChild); }
 }
 /* ── IMAGEM: pré-visualização + upload para Supabase Storage ── */
 function prodImageField(p){
@@ -547,17 +555,21 @@ function fldSelGrp(id,cur,grupos){return '<div class="fg"><label>Categoria (sec�
 function saveProdModal(id){
   var name=document.getElementById('m_name').value.trim();
   if(!name){alert('Indique o nome do produto.');return;}
-  /* recolher linhas de tamanho + preço */
-  var sizes=[], priceBySize={};
+  /* recolher linhas de tamanho + preço; o rádio marca o preço do cartão */
+  var sizes=[], priceBySize={}, cardPrice=null;
   var rows=document.querySelectorAll('#m_sizes_wrap .size-row');
   for(var i=0;i<rows.length;i++){
     var lbl=rows[i].querySelector('.m_size_label').value.trim();
     var pr=parseInt(rows[i].querySelector('.m_size_price').value)||0;
-    if(lbl){ sizes.push(lbl); priceBySize[lbl]=pr; }
+    var radio=rows[i].querySelector('.m_card_radio');
+    if(lbl){
+      sizes.push(lbl); priceBySize[lbl]=pr;
+      if(radio&&radio.checked) cardPrice=pr;
+    }
   }
   if(!sizes.length){ sizes=['Unid.']; priceBySize={'Unid.':0}; }
-  /* preço do cartão = preço do primeiro tamanho */
-  var cardPrice=priceBySize[sizes[0]]||0;
+  /* sem rádio marcado: usa o preço do primeiro tamanho */
+  if(cardPrice==null) cardPrice=priceBySize[sizes[0]]||0;
   var data={
     name:name, grupo:document.getElementById('m_grupo').value, cat:document.getElementById('m_cat').value.trim(),
     price:cardPrice, stock:document.getElementById('m_stock').value,
