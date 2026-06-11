@@ -586,7 +586,7 @@ footer{background:#080808;color:rgba(255,255,255,.65);padding:52px 80px 24px;}
 <script>
 /* INSI PRODUTOS — JS LIMPO */
 const IMG_BASE='img/';
-function img(n){return n?(IMG_BASE+n):'';}
+function img(n){ if(!n)return ''; return /^https?:\/\//.test(n)?n:(IMG_BASE+n); }
 
 const CK='insiCart_v3';
 function getCart(){try{return JSON.parse(localStorage.getItem(CK)||'[]');}catch(e){return[];}}
@@ -735,6 +735,7 @@ function updatePrice(v){
           if(r.tamanhos && r.tamanhos.length) p.sizes=r.tamanhos;
           if(r.grupo) p.grupo=r.grupo;
           if(r.categoria) p.cat=r.categoria;
+          if(r.imagem){ p.img=r.imagem; p.ph=0; }
         } else {
           /* produto novo criado no admin que não existe no ficheiro */
           PRODUCTS.push({
@@ -743,7 +744,7 @@ function updatePrice(v){
             price:r.preco||0, stock:numToStock(r.stock),
             sizes:(r.tamanhos&&r.tamanhos.length)?r.tamanhos:['Unid.'],
             priceBySize:(r.precos&&Object.keys(r.precos).length)?r.precos:null,
-            colors:[], ph:1, grupo:r.grupo||'Outros', ficha:r.ficha_tecnica||''
+            colors:[], img:r.imagem||'', ph:r.imagem?0:1, grupo:r.grupo||'Outros', ficha:r.ficha_tecnica||''
           });
         }
       });

@@ -116,6 +116,13 @@ tr:hover td{background:#FAFBFC;}
 .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--red);}
 .fg textarea{resize:vertical;min-height:70px;}
 .fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.size-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:center;}
+.size-row input{margin:0;}
+.size-del{width:32px;height:32px;border-radius:8px;background:var(--bg);color:var(--mut);flex:none;font-size:13px;}
+.size-del:hover{background:#fde8e8;color:#c81e1e;}
+.hint{font-size:11px;color:var(--mut);margin-top:4px;}
+.img-prev{margin:6px 0;}
+.img-prev img{max-width:120px;max-height:120px;border-radius:10px;border:1px solid var(--line);object-fit:cover;}
 .modal-f{padding:16px 24px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;position:sticky;bottom:0;background:#fff;}
 .x{width:34px;height:34px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--mut);}
 .x:hover{background:var(--danger);color:#fff;}
@@ -473,13 +480,65 @@ function openProdModal(id){
     +'<div class="modal-b">'
       +fld('Nome','m_name',esc(p.name),'text')
       +'<div class="fg-row">'+fldSelGrp('m_grupo',p.grupo,grupos)+fld('Categoria','m_cat',esc(p.cat||''),'text')+'</div>'
-      +'<div class="fg-row">'+fld('Preço (Kz)','m_price',p.price||0,'number')+fldSel('Stock','m_stock',p.stock||'in',[['in','Disponível'],['low','Stock baixo'],['out','Esgotado']])+'</div>'
-      +fld('Tamanhos (separados por vírgula)','m_sizes',esc((p.sizes||[]).join(', ')),'text')
+      +fldSel('Stock','m_stock',p.stock||'in',[['in','Disponível'],['low','Stock baixo'],['out','Esgotado']])
+      +prodSizesField(p)
+      +prodImageField(p)
       +fldArea('Descrição','m_desc',esc(p.desc||''))
     +'</div>'
     +'<div class="modal-f"><button class="btn btn-out" onclick="closeOv()">Cancelar</button><button class="btn btn-pri" onclick="saveProdModal('+(id||'null')+')">Guardar</button></div>'
   +'</div>';
   ov.classList.add('on');
+}
+/* ── PREÇO POR TAMANHO: lista dinâmica de linhas (tamanho + preço) ── */
+function prodSizesField(p){
+  var pbs=(p.priceBySize&&typeof p.priceBySize==='object')?p.priceBySize:{};
+  var sizes=(p.sizes&&p.sizes.length)?p.sizes:Object.keys(pbs);
+  if(!sizes.length) sizes=[''];
+  var rows=sizes.map(function(s){
+    var preco=(pbs[s]!=null)?pbs[s]:(p.price||'');
+    return sizeRowHtml(s,preco);
+  }).join('');
+  return '<div class="fg"><label>Tamanhos e preços (Kz)</label>'
+    +'<div id="m_sizes_wrap">'+rows+'</div>'
+    +'<button type="button" class="btn btn-out btn-sm" onclick="addSizeRow()" style="margin-top:6px">+ Adicionar tamanho</button>'
+    +'<div class="hint">O primeiro tamanho é o preço que aparece no cartão do produto.</div></div>';
+}
+function sizeRowHtml(size,preco){
+  return '<div class="size-row">'
+    +'<input type="text" class="m_size_label" placeholder="ex: 1L, 5kg, Unid." value="'+esc(size||'')+'"/>'
+    +'<input type="number" class="m_size_price" placeholder="Preço" value="'+(preco!=null?preco:'')+'"/>'
+    +'<button type="button" class="size-del" title="Remover" onclick="this.parentNode.remove()">✕</button>'
+  +'</div>';
+}
+function addSizeRow(){
+  var wrap=document.getElementById('m_sizes_wrap');
+  if(wrap){ var d=document.createElement('div'); d.innerHTML=sizeRowHtml('',''); wrap.appendChild(d.firstChild); }
+}
+/* ── IMAGEM: pré-visualização + upload para Supabase Storage ── */
+function prodImageField(p){
+  var cur=p.img||'';
+  var prev = cur ? '<img src="'+esc(cur)+'" alt="" onerror="this.style.display=\'none\'"/>' : '';
+  return '<div class="fg"><label>Imagem do produto</label>'
+    +'<input type="hidden" id="m_img" value="'+esc(cur)+'"/>'
+    +'<div id="m_img_prev" class="img-prev">'+prev+'</div>'
+    +'<input type="file" id="m_img_file" accept="image/*" onchange="uploadProdImage(this)"/>'
+    +'<div id="m_img_status" class="hint"></div></div>';
+}
+async function uploadProdImage(input){
+  var file=input.files&&input.files[0]; if(!file)return;
+  var st=document.getElementById('m_img_status');
+  st.textContent='A enviar imagem…';
+  try{
+    var ext=(file.name.split('.').pop()||'jpg').toLowerCase();
+    var path='produtos/'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'.'+ext;
+    var up=await sb.storage.from('imagens').upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type});
+    if(up.error){ st.textContent='Erro no upload: '+up.error.message; return; }
+    var pub=sb.storage.from('imagens').getPublicUrl(path);
+    var url=pub.data.publicUrl;
+    document.getElementById('m_img').value=url;
+    document.getElementById('m_img_prev').innerHTML='<img src="'+url+'" alt=""/>';
+    st.textContent='Imagem enviada ✓';
+  }catch(e){ st.textContent='Erro no upload: '+(e&&e.message||e); }
 }
 function fld(l,id,v,t){return '<div class="fg"><label>'+l+'</label><input type="'+t+'" id="'+id+'" value="'+v+'"/></div>';}
 function fldArea(l,id,v){return '<div class="fg"><label>'+l+'</label><textarea id="'+id+'">'+v+'</textarea></div>';}
@@ -488,15 +547,27 @@ function fldSelGrp(id,cur,grupos){return '<div class="fg"><label>Categoria (sec�
 function saveProdModal(id){
   var name=document.getElementById('m_name').value.trim();
   if(!name){alert('Indique o nome do produto.');return;}
+  /* recolher linhas de tamanho + preço */
+  var sizes=[], priceBySize={};
+  var rows=document.querySelectorAll('#m_sizes_wrap .size-row');
+  for(var i=0;i<rows.length;i++){
+    var lbl=rows[i].querySelector('.m_size_label').value.trim();
+    var pr=parseInt(rows[i].querySelector('.m_size_price').value)||0;
+    if(lbl){ sizes.push(lbl); priceBySize[lbl]=pr; }
+  }
+  if(!sizes.length){ sizes=['Unid.']; priceBySize={'Unid.':0}; }
+  /* preço do cartão = preço do primeiro tamanho */
+  var cardPrice=priceBySize[sizes[0]]||0;
   var data={
     name:name, grupo:document.getElementById('m_grupo').value, cat:document.getElementById('m_cat').value.trim(),
-    price:parseInt(document.getElementById('m_price').value)||0, stock:document.getElementById('m_stock').value,
-    sizes:document.getElementById('m_sizes').value.split(',').map(function(s){return s.trim();}).filter(Boolean),
+    price:cardPrice, stock:document.getElementById('m_stock').value,
+    sizes:sizes, priceBySize:priceBySize,
+    img:document.getElementById('m_img').value.trim(),
     desc:document.getElementById('m_desc').value.trim()
   };
   var saved;
   if(id){ var p=state.products.find(function(x){return x.id===id;}); Object.assign(p,data); saved=p; }
-  else { var maxId=state.products.reduce(function(m,p){return Math.max(m,p.id);},0); saved=Object.assign({id:maxId+1,brand:'Insi Tintas',ph:1,novo:1,colors:[],priceBySize:{}},data); state.products.push(saved); }
+  else { var maxId=state.products.reduce(function(m,p){return Math.max(m,p.id);},0); saved=Object.assign({id:maxId+1,brand:'Insi Tintas',ph:1,novo:1,colors:[]},data); state.products.push(saved); }
   saveProducts();closeOv();drawProdTable();
   sbSaveProduct(saved).then(function(ok){toast(ok?(id?'Produto atualizado no servidor':'Produto adicionado no servidor'):'Guardado localmente — erro no servidor');});
 }

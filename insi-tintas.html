@@ -2303,6 +2303,7 @@ const IMGS={
 };
 function img(n){
   if(!n)return '';
+  if(/^https?:\/\//.test(n))return n;
   // Admin-uploaded images take priority (localStorage)
   try{
     var stored=JSON.parse(localStorage.getItem('insiIMGS')||'{}');
@@ -2705,6 +2706,7 @@ function cmpOvClk(e){if(e.target===document.getElementById('cmpOv'))closeCmp();}
           if(r.nome) p.name=r.nome;
           if(r.precos&&Object.keys(r.precos).length) p.priceBySize=r.precos;
           if(r.tamanhos&&r.tamanhos.length) p.sizes=r.tamanhos;
+          if(r.imagem){ p.img=r.imagem; p.ph=0; }
         }
       });
       try{ if(typeof renderProds==='function') renderProds(); }catch(e){}
