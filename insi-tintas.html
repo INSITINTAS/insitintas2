@@ -1498,6 +1498,7 @@ nav{background:#fff;display:flex;align-items:center;justify-content:space-betwee
 .cat-icon .insi-ic,.why-icon .insi-ic,.adm-kpi-ic .insi-ic{width:1em;height:1em;}
 .cart-empty .ei .insi-ic{width:1em;height:1em;}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <script>
@@ -2681,6 +2682,35 @@ function openCompare(){
 }
 function closeCmp(){document.getElementById('cmpOv').classList.remove('on');document.body.style.overflow='';}
 function cmpOvClk(e){if(e.target===document.getElementById('cmpOv'))closeCmp();}
+
+/* ── SINCRONIZAÇÃO COM O SERVIDOR (Supabase) ──
+   Atualiza preços/stock/descrições dos produtos em destaque a partir do painel.
+   Merge por id; preserva cores, fotos e fichas técnicas embutidas. */
+(function(){
+  try{
+    if(typeof supabase==='undefined') return;
+    var _sb=supabase.createClient("https://ozgfxearzljisjafjpji.supabase.co","sb_publishable_gglnLbgyyPf2sKoyL1p7bQ_Bx8hz7aM");
+    function nts(n){ n=Number(n)||0; return n<=0?'out':(n<=5?'low':'in'); }
+    _sb.from('produtos').select('*').then(function(res){
+      if(!res||res.error||!res.data||!res.data.length) return;
+      var byId={};
+      for(var i=0;i<PRODUCTS.length;i++){ byId[PRODUCTS[i].id]=PRODUCTS[i]; }
+      res.data.forEach(function(r){
+        var sid=(r.site_id!=null?r.site_id:r.id);
+        var p=byId[sid];
+        if(p){
+          if(r.preco!=null) p.price=r.preco;
+          if(r.stock!=null) p.stock=nts(r.stock);
+          if(r.descricao) p.desc=r.descricao;
+          if(r.nome) p.name=r.nome;
+          if(r.precos&&Object.keys(r.precos).length) p.priceBySize=r.precos;
+          if(r.tamanhos&&r.tamanhos.length) p.sizes=r.tamanhos;
+        }
+      });
+      try{ if(typeof renderProds==='function') renderProds(); }catch(e){}
+    }).catch(function(e){ console.warn('Supabase:', e); });
+  }catch(e){ console.warn('Supabase init:', e); }
+})();
 
 /* ── RENDER PRODUCTS ── */
 function renderProds(list){
