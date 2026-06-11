@@ -969,7 +969,7 @@ function addFromModal(){
   var key=_mp.id+'|'+_mc+'|'+_ms;
   var ex=c.find(function(x){return x.key===key;});
   if(ex){ex.qty++;}
-  else{c.push({id:_mp.id,key:key,name:_mp.name,brand:_mp.brand,img:_mp.img,img_data:img(_mp.img),price:_mp.price,colorHex:_mc,colorName:cn(_mc),size:_ms,qty:1});}
+  else{c.push({id:_mp.id,key:key,name:_mp.name,brand:_mp.brand,img:_mp.img,img_data:img(_mp.img),price:priceFor(_mp,_ms),colorHex:_mc,colorName:cn(_mc),size:_ms,qty:1});}
   saveCart(c);renderCart();refreshBadge();
   showToast(_mp.name.substring(0,28)+'... adicionado!');
   var btn=document.getElementById('mAddBtn');btn.textContent='Adicionado!';btn.classList.add('ok');

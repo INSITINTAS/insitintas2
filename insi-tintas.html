@@ -169,6 +169,7 @@ nav{background:#fff;display:flex;align-items:center;justify-content:space-betwee
 .sizes{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px;}
 .sz{padding:6px 13px;border:1.5px solid #ddd;border-radius:7px;background:#fff;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s;}
 .sz:hover,.sz.on{border-color:var(--p);background:var(--p);color:#fff;}
+.sz .sz-pr{display:block;font-size:.65rem;font-weight:700;opacity:.75;margin-top:1px;}
 .m-acts{display:flex;gap:7px;}
 .m-ficha{width:100%;margin-bottom:9px;background:#fff;color:var(--p);border:1.5px solid var(--p);padding:11px;border-radius:9px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.86rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s;}
 .m-ficha:hover{background:var(--p);color:#fff;}
@@ -1218,6 +1219,7 @@ nav{background:#fff;display:flex;align-items:center;justify-content:space-betwee
 .sizes{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px;}
 .sz{padding:6px 13px;border:1.5px solid #ddd;border-radius:7px;background:#fff;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .15s;}
 .sz:hover,.sz.on{border-color:var(--p);background:var(--p);color:#fff;}
+.sz .sz-pr{display:block;font-size:.65rem;font-weight:700;opacity:.75;margin-top:1px;}
 .m-acts{display:flex;gap:7px;}
 .m-add{flex:1;background:var(--d);color:#fff;border:none;padding:12px;border-radius:9px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;}
 .m-add:hover{background:var(--p);}
@@ -2403,7 +2405,8 @@ function addCart(pid,hex,cname,size){
   var ralName=ralParts?ralParts[2]:(cname||'');
   var displayName=ralCode?(ralCode+' — '+ralName):(cname||cn(hex));
   if(ex){ex.qty++;}
-  else c.push({id:p.id,key,name:p.name,brand:p.brand,img:p.img,price:p.price,
+  else c.push({id:p.id,key,name:p.name,brand:p.brand,img:p.img,
+    price:(p.priceBySize&&size&&p.priceBySize[size]!=null)?p.priceBySize[size]:p.price,
     linha:p.linha,cat:p.cat,tech:p.tech||{},
     colorHex:hex,colorName:displayName,ralCode:ralCode,ralName:ralName,size,qty:1});
   saveCart(c);renderCart();refreshBadge();
@@ -2491,6 +2494,11 @@ function toggleMob(){document.getElementById('hamBtn').classList.toggle('open');
 const BL={hot:'+ Vendido',new:'Novidade',sale:'Promoção',dest:'Destaque'};
 const BC={hot:'#ff6b00',new:'#F7B731',sale:'#D62828',dest:'#7c3aed'};
 let _mp=null, _mc='', _ms='';
+/* preço do tamanho selecionado (cai no preço geral se não definido) */
+function priceFor(p,size){
+  if(p&&p.priceBySize&&size&&p.priceBySize[size]!=null)return p.priceBySize[size];
+  return p?(p.price||0):0;
+}
 
 function openModal(id){
   addRecent(id);
@@ -2506,9 +2514,9 @@ function openModal(id){
   document.getElementById('mBrand').textContent=p.brand;
   document.getElementById('mName').textContent=p.name;
   document.getElementById('mDesc').textContent=p.desc;
-  document.getElementById('mPrice').textContent=fmt(p.price);
+  document.getElementById('mPrice').textContent=fmt(priceFor(p,_ms));
   document.getElementById('mOld').textContent=p.old?fmt(p.old)+' (Preço anterior)':'';
-  document.getElementById('mUsd').textContent=showUSD?`≈ $${Math.round(p.price/usdRate)} USD · Taxa: ${usdRate} Kz/USD`:'';
+  document.getElementById('mUsd').textContent=showUSD?`≈ $${Math.round(priceFor(p,_ms)/usdRate)} USD · Taxa: ${usdRate} Kz/USD`:'';
   document.getElementById('mImg').src=img(p.img);
   // Colour label with RAL info
   renderColorLabel(_mc);
@@ -2525,7 +2533,10 @@ function openModal(id){
     html+='<button class="sw-more-btn" onclick="openPalForProduct()">+706 cores RAL</button>';
     document.getElementById('mSwatches').innerHTML=html;
   })();
-  document.getElementById('mSizes').innerHTML=p.sizes.map((s,i)=>`<button class="sz ${i===0?'on':''}" onclick="selSize('${s}',this)">${s}</button>`).join('');
+  document.getElementById('mSizes').innerHTML=p.sizes.map((s,i)=>{
+    var spr=(p.priceBySize&&p.priceBySize[s]!=null)?`<span class="sz-pr">${fmt(p.priceBySize[s])}</span>`:'';
+    return `<button class="sz ${i===0?'on':''}" onclick="selSize('${s}',this)">${s}${spr}</button>`;
+  }).join('');
   document.getElementById('mTech').innerHTML=`<strong><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/><path d="M9 10h6M9 14h6M9 18h4"/></svg> Ficha Técnica</strong>`+Object.entries(p.tech||{}).map(([k,v])=>`<div class="tr"><span>${k}</span><span>${v}</span></div>`).join('');
   document.getElementById('mCerts').innerHTML=`<span class="cert"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg> DPRT</span><span class="cert"><svg class="insi-ic insi-flag" width="1.25em" height="1em" viewBox="0 0 36 24" aria-hidden="true" focusable="false"><rect width="36" height="12" y="0" fill="#cc092f"/><rect width="36" height="12" y="12" fill="#000"/><g fill="#f9d616" transform="translate(18 12)"><path d="M-4 -5 A5 5 0 1 0 -4 5 4 4 0 1 1 -4 -5z"/><path d="M0 -5.5l.9 2.7h2.8l-2.3 1.7.9 2.7L0 -.2l-2.3 1.6.9-2.7-2.3-1.7h2.8z"/><rect x="-1" y="-1" width="6" height="1.4" transform="rotate(45)"/></g></svg> Made in Angola</span>${(p.tech&&(p.tech.Base==='Aquosa'||p.tech.Base==='Plástica'||p.tech.Base==='Elástica'))?'<span class="cert"><svg class="insi-ic" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20c0-9 7-14 16-14 0 9-5 16-14 16-1 0-2 0-2-2z"/><path d="M9 15c2-3 5-5 8-6"/></svg> Baixo VOC</span>':''}`;
   const wb=document.getElementById('mWishBtn');
@@ -2537,7 +2548,18 @@ function openModal(id){
 }
 
 function selColor(h,el){_mc=h;document.querySelectorAll('#mSwatches .sw').forEach(s=>s.classList.remove('on'));el.classList.add('on');document.getElementById('mColorName').textContent=cn(h);}
-function selSize(s,el){_ms=s;document.querySelectorAll('#mSizes .sz').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
+function selSize(s,el){
+  _ms=s;
+  document.querySelectorAll('#mSizes .sz').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  /* atualizar o preço para o tamanho escolhido */
+  if(_mp){
+    var pr=priceFor(_mp,s);
+    document.getElementById('mPrice').textContent=fmt(pr);
+    var u=document.getElementById('mUsd');
+    if(u&&showUSD)u.textContent='≈ $'+Math.round(pr/usdRate)+' USD · Taxa: '+usdRate+' Kz/USD';
+  }
+}
 function addFromModal(){
   if(!_mp)return;
   addCart(_mp.id,_mc,cn(_mc),_ms);
